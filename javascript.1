@@ -1,0 +1,28 @@
+if (/^[\\],:{}\\s]*$/.test(text.replace(/\\\\["\\\\\\/bfnrtu]/g, '@').
+    replace(/"[^"\\\\\\n\\r]*"|true|false|null|-?\d+(?:\\.\\d*)?(?:[eE][+\\-]?\d+)?/g, ']').
+    replace(/(?:^|:|,)(?:\\s*\\[)+/g, ''))) {
+
+    // In the second stage we use the eval function to compile the text into a
+    // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
+    // in JavaScript: it can begin a block or an object literal. We wrap the text
+    // in parens to eliminate the ambiguity.
+
+    j = eval('(' + text + ')');
+
+    // In the optional third stage, we recursively walk the new structure, passing
+    // each name/value pair to a reviver function for possible transformation.
+
+    return typeof reviver === 'function' ?
+        walk({'': j}, '') : j;
+}
+
+// jQuery style
+// remove links when content is deleted
+$("#links input[name='links[]']").bind("change", function() {
+  if (this.value == "") {
+    // dont remove last link
+    $(this).parent().not(':last-child').slideUp("normal", function() {
+      $(this).remove();
+    });
+  }
+});

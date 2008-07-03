@@ -1,0 +1,16 @@
+function glSlang_GetInfoLog(glObject : GLHandleARB) : String;
+var
+  blen,slen : GLInt;
+  InfoLog   : PGLCharARB;
+begin
+  glGetObjectParameterivARB(glObject, GL_OBJECT_INFO_LOG_LENGTH_ARB , @blen);
+  if blen > 1 then
+  begin
+  {\$IFDEF VER100}
+    GetMem(InfoLog, blen*SizeOf(GLCharARB));
+    glGetInfoLogARB(glObject, blen, slen, InfoLog);
+    Result := PChar(InfoLog);
+    Dispose(InfoLog);
+  (*\$IFDEF VER100*)
+  end;
+end;

@@ -1,0 +1,53 @@
+$mystring = "Hello world!";
+
+#First simple test ...
+if($mystring =~ m/World/) { print "Yes"; }
+
+=begin
+=put Some other test ...
+=cut
+if($mystring =~ m/World/i ) { print "Yes"; }
+
+$mystring =~ s/world/mom/;
+print $mystring;
+
+$mystring = "[2004/04/13] The date of this article.";
+if($mystring =~ m/\d/) { print "Yes"; }
+
+$mystring = "[2004/04/13] The date of this article.";
+if($mystring =~ m/(\d)/) {
+        print "The first digit is $1.";
+}
+
+$mystring = "[2004/04/13] The date of this article.";
+if($mystring =~ m/(\d+)/) {
+        print "The first number is $1.";
+}
+
+$mystring = "[2004/04/13] The date of this article.";
+while($mystring =~ m/(\d+)/g) {
+        print "Found number $1.";
+}
+
+$mystring = "The start text always precedes the end of the end text.";
+if($mystring =~ m/start(.*)end/) {
+        print $1;
+}
+
+$mystring = "The start text always precedes the end of the end text.";
+if($mystring =~ m/start(.*?)end/) {
+        print $1;
+}
+
+$test =~ tr/\'//;
+
+print <<EOF;
+The price is $Price.
+EOF
+
+print << "EOF"; # same as above
+The price is $Price.
+EOF
+
+print \'hardquote with escaped \\\' single quote or \\\\ backslash\';
+print \'this \n \t otoh is not escaped but literal\';

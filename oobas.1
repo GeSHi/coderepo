@@ -1,0 +1,10 @@
+REM  *****  BASIC  *****
+Sub Main
+  oReflection = createUnoService( "com.sun.star.reflection.CoreReflection" )
+  oInfo = oReflection.forName( "nom.dannybrewer.test.XDannysCalcFunctions1" )
+  aMethods = oInfo.getMethods()
+  For i = 0 To UBound( aMethods )
+    oMethod = aMethods( i )
+    Print oMethod.getName()
+  Next
+End Sub

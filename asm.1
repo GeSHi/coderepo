@@ -1,0 +1,32 @@
+;The kernel prototype (just to test GRUB,
+;the actual kernel will be a bit more complicated)
+;The Multiboot Header
+dd 0x1BADB002 ; signature
+dd 0x00010000 ; flags
+dd 0xE4514FFE ; checksum
+dd 0x40000001 ; header_addr
+dd 0x40000001 ; load_addr
+dd 0x00000000 ; load_end_addr
+dd 0x00000000 ; bss_end_addr
+dd 0x40000031 ; entry_addr
+dd 0x00000000 ; mod_type
+dd 0x00000320 ; width
+dd 0x00000258 ; height
+dd 0x00000008 ; depth 1 byte per pixel
+; Multiboot header end
+; shut down the PC
+mov al,0x0FE
+out 0x064,al
+
+0177:02714633 CALL [ADVAPI32!RegQueryValueExA]
+0177:02714639 XOR ECX,ECX ; <--Comment
+0177:0271463B MOV [ESI+08h],EAX
+0177:0271463E TEST EAX,EAX
+0177:02714640 SETZ CL
+0177:02714643 MOV EAX,ECX
+0177:02714645 JMP 02714650h
+0177:02714647 MOV DWORD PTR [EAX*4+EBP-2Ch],000000A0h
+0177:0271464E XOR EAX,EAX
+0177:02714650 POP ESI
+0177:02714651 LEAVE
+0177:02714652 RET 000Ch

@@ -1,0 +1,19 @@
+void hsv_to_hsl(double h, double s, double v,
+double* hh, double* ss, double *ll)
+{
+    *hh = h;
+    *ll = (2 - s) * v;
+    *ss = s * v;
+    *ss /= (*ll <= 1) ? (*ll) : 2 - (*ll);
+    *ll /= 2;
+}
+
+void hsl_to_hsv(double hh, double ss, double ll,
+double* h, double* s, double *v)
+{
+    *h = hh;
+    ll *= 2;
+    ss *= (ll <= 1) ? ll : 2 - ll;
+    *v = (ll + ss) / 2;
+    *s = (2 * ss) / (ll + ss);
+}

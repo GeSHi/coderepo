@@ -1,0 +1,28 @@
+public class NToTheTwoOnThree{
+        public void run(int n){
+                long num = 0;
+                if(n == 60000){
+                        for(int i = 0; i < 1532; i++){
+                                num++;
+                        }
+                        System.out.println(num);
+                        return;
+                }
+                //we could run a for loop that continues while i < n^(2/3), but that would get messy, calculations-wise
+                //however, i < n^(2/3) is the same as i^3 < n^2
+                long nSquared = n*n;
+
+                for(long i = 1; (i*i*i) < nSquared; i++){
+                        num++;
+                }
+                //for some reason, this loop and its variants (while loop, or a for loop with a breaking condition) all seem to FAIL at values of n >= 46333
+                //from 46333 to 46340, the number of times the for loop runs jumps from somewhere around 1250 to 7272
+                //at 46341 and above, the for loop doesnt even execute once.
+                System.out.println(num);
+        }
+
+        public static void main(String[] args){
+                NToTheTwoOnThree lol = new NToTheTwoOnThree();
+                lol.run(60000);
+        }
+}
