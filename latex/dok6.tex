@@ -1,0 +1,33 @@
+\documentclass[a4paper,ngerman,12pt]{article} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage[scaled]{helvet} 
+\renewcommand{\familydefault}{sffamily}
+%
+\usepackage{myTitlePage}
+\usepackage[lmargin=3cm,rmargin=2.5cm,tmargin=2cm]{geometry}
+\usepackage{url}
+\usepackage{babel}
+%
+\begin{document} 
+
+\date{\today}
+
+\title{\LaTeX\\ -- \\[10pt] {\huge\textnormal{mehr als nur eine Textverarbeitung}}}
+
+\author{Foobar Asdf}
+
+\adress{Elben Tal\\
+  D-112345 Berlin}
+\email{mail.geshi@example.com} 
+
+\maketitle
+
+
+\begin{description}
+\item[\texttt{adress}] Neu definiertes Makro, welches die Adresse aufnimmt.
+\item[\texttt{email}] Neu definiertes Makro, welches die Adresse aufnimmt.
+
+\end{description}
+
+\end{document}

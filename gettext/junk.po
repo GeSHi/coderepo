@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-01-24 18:55+0100\n"
+"PO-Revision-Date: 2007-01-24 19:35+0100\n"
+"Last-Translator: Milian Wolff <mail@milianw.de>\n"
+"Language-Team: German <foobar@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: 3co/data/tpl/frontend/default/engines/news.php:14
+#: 3co/data/tpl/frontend/default/tags.php:14
+#: 3co/data/tpl/frontend/default/engines/news_detail.php:10
+msgid "%A, %B %d, %Y, %I:%M %p"
+msgstr "%A, der %d. %B %Y, %H:%M Uhr"
+
+#: 3co/data/tpl/frontend/default/includes/comments_num.php:2
+#, php-format
+msgid "%d comment"
+msgid_plural "%d comments"
+msgstr[0] "%d Kommentar"
+msgstr[1] "%d Kommentare"
+
+#: 3co/classes/engine_interface.php:249
+#, php-format
+msgid ", page %d"
+msgstr ", Seite %d"

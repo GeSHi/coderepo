@@ -1,0 +1,92 @@
+Index: geshi.php
+===================================================================
+--- geshi.php	(Revision 1281)
++++ geshi.php	(Arbeitskopie)
+@@ -3581,35 +3581,62 @@
+     * @since 1.0.8
+     */
+     function _optimize_regexp_list_tokens_to_string(&$tokens, $recursed = false) {
++        $pointer =& $tokens;
++        $parents = array();
++        $parents_closed = array();
+         $list = '';
+-        foreach ($tokens as $token => $sub_tokens) {
+-            $list .= $token;
+-            $close_entry = isset($sub_tokens['']);
+-            unset($sub_tokens['']);
+-            if (!empty($sub_tokens)) {
+-                $list .= '(?:' . GeSHi::_optimize_regexp_list_tokens_to_string($sub_tokens, true) . ')';
+-                if ($close_entry) {
+-                    // make sub_tokens optional
+-                    $list .= '?';
++        $token = key($pointer);
++        while (true) {
++            if (!is_null($token)) {
++                $list .= $token;
++                $close_entry = isset($pointer[$token]['']);
++                unset($pointer[$token]['']);
++            }
++            if (!is_null($token) && !empty($pointer[$token])) {
++                $list .= '(?:';
++                array_push($parents, $pointer);
++                end($parents);
++                $parents_closed[key($parents)] = $close_entry;
++                unset($parents[key($parents)][$token]);
++                $pointer =& $pointer[$token];
++                $token = key($pointer);
++            } else {
++                next($pointer);
++                $token = key($pointer);
++                if (is_null($token)) {
++                    if (empty($parents)) {
++                        // this is the end
++                        break;
++                    } else {
++                        $was_closed = array_pop($parents_closed);
++                        $pointer = array_pop($parents);
++                        next($pointer);
++                        $token = key($pointer);
++                        $list .= ')';
++                        if ($was_closed) {
++                            $list .= '?';
++                        }
++                        if (!is_null($token)) {
++                            $list .= '|';
++                        }
++                    }
++                } else {
++                    $list .= '|';
+                 }
+             }
+-            $list .= '|';
+         }
+-        if (!$recursed) {
+-            // do some optimizations
+-            // common trailing strings
+-            // BUGGY!
+-            //$list = preg_replace_callback('#(?<=^|\:|\|)\w+?(\w+)(?:\|.+\1)+(?=\|)#', create_function(
+-            //    '$matches', 'return "(?:" . preg_replace("#" . preg_quote($matches[1], "#") . "(?=\||$)#", "", $matches[0]) . ")" . $matches[1];'), $list);
+-            // (?:p)? => p?
+-            $list = preg_replace('#\(\?\:(.)\)\?#', '\1?', $list);
+-            // (?:a|b|c|d|...)? => [abcd...]?
+-            // TODO: a|bb|c => [ac]|bb
+-            $list = preg_replace_callback('#\(\?\:((?:.\|)+.)\)#', create_function(
+-                '$matches', 'return "[" . str_replace("|", "", $matches[1]) . "]";'), $list);
+-        }
+-        // return $list without trailing pipe
+-        return substr($list, 0, -1);
++        // do some optimizations
++        // common trailing strings
++        // BUGGY!
++        //$list = preg_replace_callback('#(?<=^|\:|\|)\w+?(\w+)(?:\|.+\1)+(?=\|)#', create_function(
++        //    '$matches', 'return "(?:" . preg_replace("#" . preg_quote($matches[1], "#") . "(?=\||$)#", "", $matches[0]) . ")" . $matches[1];'), $list);
++        // (?:p)? => p?
++        $list = preg_replace('#\(\?\:(.)\)\?#', '\1?', $list);
++        // (?:a|b|c|d|...)? => [abcd...]?
++        // TODO: a|bb|c => [ac]|bb
++        $list = preg_replace_callback('#\(\?\:((?:.\|)+.)\)#', create_function(
++            '$matches', 'return "[" . str_replace("|", "", $matches[1]) . "]";'), $list);
++        return $list;
+     }
+ } // End Class GeSHi
+ 
