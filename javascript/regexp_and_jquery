@@ -1,6 +1,6 @@
-if (/^[\\],:{}\\s]*$/.test(text.replace(/\\\\["\\\\\\/bfnrtu]/g, '@').
-    replace(/"[^"\\\\\\n\\r]*"|true|false|null|-?\d+(?:\\.\\d*)?(?:[eE][+\\-]?\d+)?/g, ']').
-    replace(/(?:^|:|,)(?:\\s*\\[)+/g, ''))) {
+if (/^[\],:{}\s]*$/.test(text.replace(/\\["\\\/bfnrtu]/g, '@').
+    replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+    replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
     // In the second stage we use the eval function to compile the text into a
     // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
