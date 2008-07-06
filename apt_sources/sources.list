@@ -1,5 +1,5 @@
 deb file:/var/cache/apt-build/repository apt-build main
-#deb cdrom:[Kubuntu 7.10 _Gutsy Gibbon_ - Alpha i386 (20070808)]/ gutsy main restricted
+deb cdrom:[Kubuntu 7.10 _Gutsy Gibbon_ - Alpha i386 (20070808)]/ gutsy main restricted
 # See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
 # newer versions of the distribution.
 
