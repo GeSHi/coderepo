@@ -10,7 +10,13 @@ INSERT INTO kb_entries (entry_id, description, title, source_type, source_values
     '4,6,10',
     '1,2,3,4,6,7,10'
   );
-
+/********
+  testing multiline comments
+  SELECT foo FROM bar
+ *********/
+ 
+-- single line comment
+ 
 INSERT INTO kb_entry_links (entry_id, link) VALUES
   (1, 'http://example.com'),
   (1, 'http://systematrix.de'),
