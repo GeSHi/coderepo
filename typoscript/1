@@ -1,0 +1,14 @@
+temp.newsTitel=COA
+temp.newsTitel{
+  wrap=Das ist der Titel:|
+  10=RECORDS
+  10 {
+    # id des template-records
+    source = {GPvar:tx_ttnews|tt_news}
+    source.insertData = 1
+    tables = tt_news
+    conf.tt_news >
+    conf.tt_news = TEXT
+    conf.tt_news.field=title
+  }
+}
