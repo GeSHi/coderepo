@@ -1,0 +1,46 @@
+/* exemplo progress */
+
+abacaxi, mamao,  banana
+
+/* Write out the Customer table of the Sports sample database using the methods of the SAX-WRITER Object */
+DEFINE VARIABLE hSAXWriter AS HANDLE.
+DEFINE VARIABLE lok        AS LOGICAL.
+
+CREATE SAX-WRITER hSAXWriter.
+hSAXWriter:FORMATTED = TRUE.
+
+/* neste exemplo esta sendo gravado diretamente para um arquivo */
+
+lok = hSAXWriter:SET-OUTPUT-DESTINATION("file", "sw-example.xml").
+
+/* se quisessemos gerar em variavel o codigo seria assim: */
+
+def var c-msg-xml AS MEMPTR                NO-UNDO.
+lok = hSAXWriter:SET-OUTPUT-DESTINATION("MEMPTR", c-msg-xml).
+
+lok = hSAXWriter:START-DOCUMENT().
+lok = hSAXWriter:START-ELEMENT("customers").
+FOR EACH customer WHERE cust-num < 5 :
+    lok = hSAXWriter:START-ELEMENT("customer").
+    lok = hSAXWriter:INSERT-ATTRIBUTE("Cust-Num", STRING(Cust-Num)).
+    lok = hSAXWriter:INSERT-ATTRIBUTE("Name" , NAME).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Address", Address).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Address2", Address2). 
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("City", City).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("State", State).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Postal-Code", Postal-Code).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Country", Country).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Phone", Phone).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Contact", Contact).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Sales-Rep", Sales-Rep).  
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Credit-Limit",STRING(Credit-Limit)). 
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Balance", STRING(Balance)).  
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Terms", Terms).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Discount", STRING(Discount)).
+    lok = hSAXWriter:WRITE-DATA-ELEMENT("Comments", Comments).  
+    lok = hSAXWriter:END-ELEMENT("customer").
+END.
+lok = hSAXWriter:END-ELEMENT("customers").
+lok = hSAXWriter:END-DOCUMENT().
+DELETE object hSAXWriter.
+
