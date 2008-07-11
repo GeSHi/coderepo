@@ -1,0 +1,14 @@
+* Verbose solution for a quadratic formula
+
+      COMPUTE X = (-B + (B ** 2 - (4 * A * C)) ** .5) / (2 * A)
+
+* Alternatively one could use:
+
+      MULTIPLY B BY B GIVING B-SQUARED.  
+      MULTIPLY 4 BY A GIVING FOUR-A.  
+      MULTIPLY FOUR-A BY C GIVING FOUR-A-C.  
+      SUBTRACT FOUR-A-C FROM B-SQUARED GIVING RESULT-1.  
+      COMPUTE RESULT-2 = RESULT-1 ** .5.
+      SUBTRACT B FROM RESULT-2 GIVING NUMERATOR.
+      MULTIPLY 2 BY A GIVING DENOMINATOR.
+      DIVIDE NUMERATOR BY DENOMINATOR GIVING X.
