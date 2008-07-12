@@ -1,0 +1,8 @@
+#foo.bar:active {
+	background:yellow url(file.png);
+	background-image: url('file.png');
+	background-image:url("file.png");
+	background-image:url( file.png );
+	background-image: #f00 url ( "file.png") ;
+	background-image: url ('file.png' ) ;
+}
