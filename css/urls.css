@@ -6,3 +6,24 @@
 	background: #f00 url( "file.png") ;
 	background-image: url('file.png' ) ;
 }
+
+url(http://example.com/test.css)
+url(http://www.example.com/test.css)
+url(https://example.com/test.css)
+url(https://www.example.com/test.css)
+url(file:////example.com/test.css?a=%20&amp;test)
+url(https://example.com/test.css)
+
+#nav a:hover {
+filter:
+progid:DXImageTransform.Microsoft.AlphaImageLoader
+(src='images/nav_hover.png');
+}
+
+html > body #nav a:hover {
+background: url(images/nav_hover.png);
+}
+#container {
+filter:Alpha(opacity=80);
+opacity:80%;
+}
