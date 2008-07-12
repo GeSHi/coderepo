@@ -3,6 +3,6 @@
 	background-image: url('file.png');
 	background-image:url("file.png");
 	background-image:url( file.png );
-	background-image: #f00 url ( "file.png") ;
-	background-image: url ('file.png' ) ;
+	background: #f00 url( "file.png") ;
+	background-image: url('file.png' ) ;
 }
