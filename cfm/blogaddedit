@@ -1,0 +1,133 @@
+<!---
+<fusedoc fuse="frmBlogAddEdit" language="ColdFusion" specification="2.0">
+  <responsibilities>
+      This page will handle the adding and editing of blogs, to be done by webmasters only
+ 
+   Actions needed
+          Queries to insert the blog fields into the database (actAddEditBlog)
+    </responsibilities>
+</fusedoc>
+--->
+ 
+<!------------------------------------------------------------------------------------------->
+ 
+<cfif SESSION.accessIsWebmaster EQ 1>
+ 
+<h3>Add/Edit Blog</h3>
+<br />
+ 
+<cfoutput>
+<form method="post" action="#myself#blog.blogaddedit&mode=<cfif isDefined("url.bid")>edit&bid=#bid#<cfelse>add</cfif>&obb=#obb#&adb=#adb#" enctype="multipart/form-data">
+ 
+<cfif mode NEQ "delete">
+<table class="mediumfont" width="0%" cellspacing="10">
+  <tr>
+            <td><strong>SWITCH:</strong></td>
+               <td onMouseOver="this.style.backgroundColor='##F6F6F6';" onMouseOut=this.style.backgroundColor="##FFFFFF"><a href="#myself#blog.blogmanage&obb=#obb#&adb=#adb#" target="_self">Manage Blogs</a></td>
+    </tr>
+</table>
+</cfif>
+</cfoutput>
+<hr>
+ 
+  <cfif Len(message) GT 0>
+    <br />
+    <cfoutput>#message#</cfoutput> <br />
+    <br />
+    <cfif error GT 0>
+      <a href="javascript:history.go(-1)">Back</a>
+      <cfelse>
+      <a href="<cfoutput>#myself#blog.blogaddedit&obb=#obb#&adb=#adb#</cfoutput>" target="_self">Continue</a>
+    </cfif>
+    <cfelse>
+ 
+<table width="100%" class="posttable">
+  <tr>
+    <td class="smallfont" width="30%">Blog name </td>
+    <td><input name="FRMblogName" type="text" style="width: 100%;" value="<cfoutput>#Trim(rsAddEditBlogFillBlanks.blogName)#</cfoutput>" /></td>
+  </tr>
+  <tr>
+    <td class="smallfont" valign="top">Blog description </td>
+    <td><textarea name="FRMblogDescription" cols="" rows="" style="width: 100%;"><cfoutput>#Trim(rsAddEditBlogFillBlanks.blogDescription)#</cfoutput></textarea></td>
+  </tr>
+  <tr>
+    <td class="smallfont" valign="top">Blog author </td>
+    <td>
+ 
+     <div id="scrollingauthors" style="overflow: auto; height: 150px; width:100%;">
+          <table class="smallfont" bgcolor="#F9F9F9">
+ 
+                    <tr bgcolor="#F6F6F6">
+                          <td><strong>Name</strong></td>
+                          <td><strong>Authr.</strong></td>
+                                <td><strong>Pub.</strong></td>
+                  </tr>
+ 
+                  <cfparam name="count" default="0">
+ 
+                     <cfoutput query="rsListPersonnel">
+                              <cfif persPK NEQ 0>
+                                     <cfset count = count + 1>
+                                       <cfif count MOD 2><cfset bgcolor = "##FFFFFF"><cfelse><cfset bgcolor="##FFFFF6"></cfif> 
+ 
+                                       <cfloop index="i" from="1" to="#listLen(rsAddEditBlogFillBlanks.AutPKList)#">
+                                           <cfif listGetAt(rsAddEditBlogFillBlanks.AutPKList, i) EQ Trim(rsListPersonnel.persPK)>
+                                                  <cfset isMember = 1>
+                                                    <cfset isAutPub = "#listGetAt(rsAddEditBlogFillBlanks.AutPubList, i)#">
+                                                 <cfset isAutPubArray = listToArray(isAutPub, "_")>
+                                              </cfif>
+                                 </cfloop>
+ 
+                                      <tr bgcolor="#bgcolor#">
+                                                <td width="100%">#Trim(persLName)#, #Trim(persFName)# #Trim(persMName)#</td>
+                                            <td align="right"><input name="FRMblogautIsAuthor" type="checkbox" value="#persPK#" <cfif isMember EQ 1 AND isAutPubArray[1] EQ 1>checked="checked"</cfif> /></td>
+                                              <td align="left"><input name="FRMblogautIsPublisher" type="checkbox" value="#persPK#" <cfif isMember EQ 1 AND isAutPubArray[2] EQ 1>checked="checked"</cfif> /></td>
+                                    </tr>
+ 
+                                  <cfset isMember = 0>
+ 
+                           </cfif>
+                 </cfoutput>
+ 
+            </table>
+ 
+       </div>
+ 
+ </td>
+  </tr>
+ 
+  <tr>
+    <td class="smallfont">Group</td>
+    <td valign="top"><select name="FRMblogGroup">
+        <cfoutput query="rsListGroups">
+         <option value="#groupPK#" <cfif rsAddEditBlogFillBlanks.blogGroup EQ groupPK>selected</cfif>>#Trim(groupName)#</option>
+ </cfoutput>
+     </select></td>
+  </tr>
+ 
+  <tr>
+    <td class="smallfont">Published</td>
+    <td><select name="FRMblogPublished">
+    <option value="0" <cfif rsAddEditBlogFillBlanks.blogPublished EQ 0>selected</cfif>>No</option>
+  <option value="1" <cfif rsAddEditBlogFillBlanks.blogPublished EQ 1>selected</cfif>>Yes</option>
+ </select></td>
+  </tr>
+ 
+  <tr>
+    <td class="smallfont">Entries visible on LSU LAW Blogs official front page?</td>
+    <td valign="top"><select name="FRMblogFrontPage">
+   <option value="0" <cfif rsAddEditBlogFillBlanks.blogFrontPage EQ 0>selected</cfif>>No</option>
+  <option value="1" <cfif rsAddEditBlogFillBlanks.blogFrontPage EQ 1>selected</cfif>>Yes</option>
+ </select></td>
+  </tr>
+ 
+  <tr>
+    <td colspan="2" align="right"><input type="submit" name="Submit" value="submit" /></td>
+  </tr>
+</table>
+ 
+</cfif>
+ 
+<cfelse>
+<em>This page requires you to be logged in.</em>
+</cfif>
