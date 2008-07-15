@@ -1,3 +1,13 @@
+/** fancy selectors **/
+
+li:active:link.class#id:hover + blockquote:hover > p:test * {
+  color:yellow;
+}
+
+#foo.bar:active, a:active {
+
+}
+
 /*
  * milianw.de screen style
  *
