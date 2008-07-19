@@ -49,5 +49,5 @@ print << "EOF"; # same as above
 The price is $Price.
 EOF
 
-print 'hardquote with escaped \' single quote or \\ backslash\';
-print \'this \n \t otoh is not escaped but literal';
+print 'hardquote with escaped \' single quote or \\ backslash';
+print 'this \n \t otoh is not escaped but literal';
