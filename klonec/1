@@ -20,4 +20,5 @@
 </body>
 </html>
 
-
+<strong></strong>
+<% io_printf(out, "test"); %><% io_printf(out, "test"); %>
