@@ -1,0 +1,23 @@
+{include file='header.php'}
+<p>Welcome to the application</p>
+
+{if isset $logged_in_as}
+    <p>{$logged_in_as}</p>
+{/if}
+
+{if sizeof($results > 0)}
+    <ul>
+    {foreach from=$results item=i}
+       <li>{$i}</li>
+    {/foreach}
+    </ul>
+{/if}
+<p>Please enter an ID to search for</p>
+<form method='post'>
+  <input type='text' name='id' value=''>
+  <input type='submit'>
+</form>
+{include file='footer.php'}
+
+
+{$foo}{$bar}
