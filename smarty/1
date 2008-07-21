@@ -21,3 +21,8 @@
 
 
 {$foo}{$bar}
+
+{if sizeof($foo < 1)}
+_not_ highlighted as html
+<!-- comment -->
+{/if}
