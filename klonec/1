@@ -1,0 +1,23 @@
+<%!
+    #include <stdlib.h>
+%>
+<html>
+<head> <title>klapp</title> </head>
+<body>
+
+<h1>KLone app example</h1>
+
+<blockquote>
+    <blockquote>
+    <i>
+    <%
+        io_printf(out, "Hello from KLone");
+    %>
+    </i>
+    </blockquote>
+</blockquote>
+
+</body>
+</html>
+
+
