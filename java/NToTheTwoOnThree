@@ -1,6 +1,12 @@
+/**
+ * javadoc test
+ */
 public class NToTheTwoOnThree{
         public void run(int n){
                 long num = 0;
+                /*
+                normal comment test
+                */
                 if(n == 60000){
                         for(int i = 0; i < 1532; i++){
                                 num++;
