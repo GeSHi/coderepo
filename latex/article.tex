@@ -1,0 +1,325 @@
+\documentclass{mce-article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+
+\graphicspath{{figures/}}
+
+\begin{document}
+
+\title{Метод моделирования динамики показателей курсовой стоимости
+  акций на~российском фондовом рынке}
+
+\author{Парамонов\,А.\,В., Щетинин\,Е.\,Ю.}
+
+\maketitle
+
+\begin{abstract}
+  В работе проведена количественная характеризация некоторых
+  эмпирических эффектов, сопутствующих процессу изменения курсовой
+  стоимости акций на российском фондовом рынке. Предложена
+  математическая модель процесса, описываемая стохастическим
+  уравнением Фоккера"--~Планка с неоднородным коэффициентом
+  диффузии. Показано, каким образом предложенная модель может быть
+  использована для решения актуальной практической задачи
+  краткосрочного прогноза значений курсовой стоимости акций и биржевых
+  показателей.
+\end{abstract}
+
+\paragraph{Эмпирические эффекты.}
+
+Процессы изменения финансовых показателей на современных финансовых
+рынках обладают сложной, существенно нелинейной структурой. Известно,
+что эмпирические распределения приращений финансовых показателей
+являются в общем случае асимметричными и обладают степенными хвостами,
+а динамика этих процессов характеризуется кластеризацией волатильности
+и медленным угасанием автокорелляционной функции квадратов приращений
+\cite{Mantegna-Stanley, Muzy}.
+
+Эти эмпирические эффекты свойственны и процессам изменения курсовой
+стоимости акций крупных российских компаний. Характерное поведение
+эмпирических распределений в области экстремальных значений на
+коротких ($\Delta~t~=~\mbox{15 мин}$) временных интервалах подробно
+описано в работе \cite{Schetinin:EmpiricalEffects}. Показано, что эти
+распределения обладают выраженными степенными хвостами.
+
+Известно также, что на более длинных временных интервалах
+($\Delta~t~>~\mbox{1 неделя}$) распределения приближаются к
+нормальному. Свойства эмпирических распределений существенно зависят
+от выбранного масштаба времени.
+
+Для многих типов финансовых показателей характер зависимости начальных
+моментов эмпирических распределений от масштаба времени хорошо
+описывается степенным законом \cite{Mantegna-Stanley, Muzy, Peinke}:
+
+\begin{equation}
+  \label{eq:multiscaling}
+  M_n(\Delta X(\Delta t)) = C_n \cdot (\Delta t)^{\kappa_n}.
+\end{equation}
+
+Были расчитаны оценки начальных моментов порядков $n = 1, 2, 4$ для
+выборок логарифмических приращений (лог.~доходностей) курсовой
+стоимости акций крупных российских компаний, а также индекса ММВБ в
+период с~1999 по~2007~гг. Значения временных интервалов взяты в
+пределах от 5~минут до 1~месяца. Обнаружено, что во всех случаях
+характер зависимости начальных моментов от величины интервала
+приращения также хорошо описывается соотношением
+\eqref{eq:multiscaling}.
+
+\begin{figure}
+  \centering
+  \includegraphics{multiscaling-moments}
+  \caption{Зависимость моментов эмпирических распределений
+    лог.~приращений от масштаба времени. Линиями обозначена
+    аппроксимация степенной функцией.}
+\end{figure}
+
+% \begin{table}
+%   \centering
+%   \small
+%   \begin{tabular}{l|ccc}
+%     &$\kappa_1$&$\kappa_2$&$\kappa_4$\\\hline
+%     EESR &     0.99 &     1.07 &     2.02 \\
+%     GMKN &     1.00 &     1.04 &     1.71 \\
+%     LKOH &     1.00 &     1.02 &     1.77 \\
+%     RTKM &     0.99 &     1.08 &     1.92 \\
+%     MICEX&     1.00 &     1.05 &     1.59 \\
+%   \end{tabular}
+%   \caption{Численные оценки значений параметров $\kappa_n$ для
+%     распределений лог.~приращений стоимости акций крупных
+%     российских компаний и фондового индекса ММВБ.}
+%   \label{fig:condprobs}
+% \end{table}
+
+Обнаруженная закономерность отражает важные свойства нелинейного
+стохастического процесса, порождающего наблюдаемую каскадную структуру
+эмпирических распределений. Использование классических
+эконометрических методов стохастического анализа, в частности
+основанных на авторегрессионых моделях типа GARCH \cite{Bollerslev},
+для описания такого рода процессов и структур является
+неэффективным. Указанные подходы позволяют с приемлемой точностью
+описать распределения для отдельных временных интервалов, но не
+связывающие их закономерности \cite{Brummelhuis}.
+
+\paragraph{Математические модели и методы.}
+
+Мы рассматриваем изменение финансовых показателей как \emph{марковский
+  процесс}, описываемый стохастическим дифференциальным уравнением
+Фоккера"--~Планка \cite{Risken:Fokker-Planck}:
+
+\begin{equation}
+  \label{eq:Fokker-Planck}
+  \frac{\partial}{\partial \tau} p(x, \tau)
+  = \left( - \frac{\partial}{\partial x} D^{(1)}(x, \tau)
+    + \frac{\partial^2}{\partial x^2} D^{(2)}(x, \tau)
+  \right) p(x, \tau),
+\end{equation}
+
+где $x = \Delta X$ "--- значение приращения показателя курсовой
+стоимости за интервал времени $\Delta t = \Delta t_0 e^{-\tau}$,
+
+\begin{eqnarray}
+  D^{(1)}(x, \tau) &=& -x,\\
+  D^{(2)}(x, \tau) &=& \alpha(\tau) + \beta(\tau) \cdot x^2.
+\end{eqnarray}
+
+Необходимо обратить внимание на направление времени стохастического
+процесса $\tau$, которое в данном случае \emph{противоположно}
+естественному направлению времени $\Delta t$.  Уравнение
+\eqref{eq:Fokker-Planck} справедливо и для условных функций плотности
+распределения $p(x_2, \tau_2| x_1, \tau_1),\, \tau_1 < \tau_2$.
+
+Количественное оценивание параметров модели $\alpha(\tau)$,
+$\beta(\tau)$ может быть произведено непосредственно по исходным
+данным с использованием значений начальных моментов безусловных
+эмпирических распределений. Умножив обе части уравнения
+\eqref{eq:Fokker-Planck} на $x^n$ и интегрируя по $x$, получаем:
+
+\begin{eqnarray}
+  \label{eq:Kramer-Moyal}
+  \frac{\partial}{\partial \tau} M_n(x(\tau))
+  &=& \sum\limits_{k=1}^{2} \left( -1 \right)^k 
+  \int\limits_{-\infty}^{+\infty}  x^n  \left( 
+    \frac{\partial}{\partial x}  \right)^k  D^{(k)}(x,\tau)  
+  p(x,\tau) dx \nonumber\\
+  &=& \sum\limits_{k=1}^{2}  \frac{n!}{(n - k)!} 
+  \int\limits_{-\infty}^{+\infty}  x^{n-k}  D^{(k)}(x,\tau)  
+  p(x,\tau) dx.
+\end{eqnarray}
+
+Подставляя выражения для $D^{(1)}(x, \tau)$, $D^{(2)}(x, \tau)$ и
+используя сокращенное обозначение $M_n(\tau) = M_n(x(\tau))$, имеем
+
+\begin{eqnarray}
+  \frac{\partial}{\partial \tau} M_2(\tau)
+  &=& -2 M_2(\tau) + 2 \alpha(\tau) + 2 \beta(\tau) M_2(\tau),\\
+  \frac{\partial}{\partial \tau} M_4(\tau)
+  &=& -4 M_4(\tau) + 12 \alpha(\tau) M_2(\tau)
+  + 12 \beta(\tau) M_4(\tau).
+\end{eqnarray}
+
+Используя выражения для $M_n$, записанные в координатах
+стохастического процесса, получаем:
+
+\begin{eqnarray}
+  \label{eq:alphabetaM2slae}
+  - \kappa_2 M_2(\tau) &=& -2 M_2(\tau) +  2 \alpha(\tau)
+  +  2 \beta(\tau) M_2(\tau),\\
+  \label{eq:alphabetaM4slae}
+  - \kappa_4 M_4(\tau) &=& -4 M_4(\tau) + 12 \alpha(\tau) M_2(\tau)
+  + 12 \beta(\tau) M_4(\tau).
+\end{eqnarray}
+
+Система линейных алгебраических уравнений
+\eqref{eq:alphabetaM2slae}--\eqref{eq:alphabetaM4slae} позволяет найти
+значения функций $\alpha$, $\beta$ для каждого момента времени $\tau$.
+Ниже приведено решение системы.
+
+\begin{eqnarray}
+  \alpha(\tau) &=& \frac{M_2(\tau)}{12}
+  \cdot \frac{(8 - 6 \kappa_2 + \kappa_4) M_4(\tau)}
+  {M_4(\tau) - M_2^2(\tau)},\\
+  \beta(\tau) &=& \frac{1}{12}
+  \cdot \frac{(4 - \kappa_4) M_4(\tau)
+    + (-12 + 6 \kappa_2) M_2^2(\tau)}
+  {M_4(\tau) - M_2^2(\tau)}.
+\end{eqnarray}
+
+Решение уравнения \eqref{eq:Fokker-Planck} было произведено численно
+методом Монте"--~Карло. По функциям распределения 2-суточных
+логарифмических приращений реконструированы распределения для более
+коротких временных интервалов (вплоть до 15~минут). Во всех случаях
+обнаружено хорошее соответствие между эмпирическим и предсказанным
+распределениями.
+
+\begin{figure}
+  \centering
+  \includegraphics{MICEX-simulation}
+  \caption{Реконструкция распределений лог.~приращений фондового
+    индекса ММВБ. Для облегчения восприятия профили функций плотности
+    распределения смещены по оси ординат.}
+\end{figure}
+
+Параметры модели $D^{(1)}(x, \tau)$, $D^{(2)}(x, \tau)$ являются
+симметричными функциями относительно $x$. Тем не менее, предложенная
+модель позволяет получать асимметричные функции распределения, в
+случае если начальное условие является асимметричным.
+
+Таким образом, предложенная модель позволяет естественным образом
+описать наблюдаемые эмпирические эффекты:
+
+\begin{enumerate}
+\item Асимметрия распределений приращений финансовых показателей;
+\item Тяжелые (степенные) хвосты распределений на малых временных
+  интервалах;
+\item Лёгкие (экспоненциальные) хвосты распределений на больших
+  временных интервалах.
+\end{enumerate}
+
+\begin{figure}
+  \centering
+  \begin{minipage}[t]{0.45\textwidth}
+    \centering
+    \includegraphics{MICEX-qqplot}
+    \caption{Квантили эмпирического и реконструированного
+      распределений 15-минутных лог.~приращений фондового индекса
+      ММВБ.}
+  \end{minipage}
+  \hspace{0.05\textwidth}
+  \begin{minipage}[t]{0.45\textwidth}
+    \centering
+    \includegraphics{MICEX-predict-logprobs}
+    \caption{Условное распределение 5-минутных лог.~приращений
+      фондового индекса ММВБ.}
+    \label{fig:condprobs}
+  \end{minipage}
+\end{figure}
+
+\paragraph{Краткосрочный прогноз.}
+
+Математический прогноз заключается в построении условной функции
+распределения будущих значений финансового показателя по известным
+значениям в прошлом. Напомним, что рассматриваемый стохастический
+процесс по предположению является марковским, т.е.
+
+\begin{equation}
+  p(x_n, \tau_n| x_{n - 1}, \tau_{n - 1}, \ldots, x_1, \tau_1)
+  = p(x_n, \tau_n| x_{n - 1}, \tau_{n - 1}),
+  \label{eq:Markov-property}
+\end{equation}
+
+для всех $x_1, x_2, \ldots, x_n$, $\tau_1 < \ldots < \tau_{n - 1} <
+\tau_n$. Формула полной вероятности для марковского процесса имеет вид
+
+\begin{equation}
+  p(x_n, \tau_n, \ldots, x_1, \tau_1)
+  = p(x_n, \tau_n| x_{n - 1}, \tau_{n - 1})
+  \cdot p(x_{n - 1}, \tau_{n - 1}, \ldots, x_1, \tau_1).
+  \label{eq:total-prob}
+\end{equation}
+
+Рекурсивно используя \eqref{eq:total-prob}, получаем формулу для
+расчёта вероятности изменения значения финансового показателя:
+
+\begin{equation}
+  p(x_n, \tau_n, \ldots, x_1, \tau_1)
+  = p(x_n, \tau_n| x_{n - 1}, \tau_{n - 1}) \cdot \ldots
+  \cdot p(x_2, \tau_2| x_1, \tau_1) \cdot p(x_1, \tau_1).
+\end{equation}
+
+На Рис.~\ref{fig:condprobs} приведен профиль условной функции
+плотности распределения 5-минутных логарифмических приращений
+фондового индекса ММВБ, расчитанный по 12~последовательным значениям
+данного финансового показателя за предшествующий час (выборка от
+24~декабря 2007~г.). В настоящей работе значения условных вероятностей
+$p(x_k, \tau_k| x_{k - 1}, \tau_{k - 1})$ получены путём численного
+решения уравнения \eqref{eq:Fokker-Planck}.
+
+\begin{thebibliography}{99}
+\bibitem{Mantegna-Stanley} \textit{R.\,Mantegna, H.\,E.\,Stanley} An
+  introduction to Econophysics\ // Cambridge University Press. 1999.
+\bibitem{Muzy} \textit{A.\,Arneodo, J."--~F.\,Muzy, D.\,Sornette}
+  Causal cascade in the stock market from the ``infrared'' to the
+  ``ultraviolet''\ // European Physical Journal
+  B. 1998. Vol.\,2. P.\,277--282.
+\bibitem{Schetinin:EmpiricalEffects} \textit{Щетинин\,Е.\,Ю.}
+  Статистический анализ свойств структур экстремальных зависимостей на
+  российском фондовом рынке\ // Финансы и кредит.
+  2005. №22(190). С.\,44--51.
+\bibitem{Peinke} \textit{Ch.\,Renner, J.\,Peinke, R.\,Friedrich}
+  Evidence of Markov properties of high frequency exchange rate data.\
+  // Physica A. 2001.\,3. Vol.\,298. P.\,499--520(22).
+\bibitem{Bollerslev} \textit{T.\,Bollerslev} Generalized
+  autoregressive conditional heteroskedasticity\ // Journal of
+  Econometrics. 1986. Vol.\,31. P.\,307--327.
+\bibitem{Brummelhuis} \textit{R.\,Brummelhuis, D.\,Guegan} The Time
+  Scaling of Value-at-Risk in GARCH(1,1) and AR(1)"--~GARCH(1,1)
+  Processes\ // Journal of Risk. 2007. Vol.\,9(4). P.\,39--94.
+\bibitem{Risken:Fokker-Planck} \textit{H.\,Risken} The Fokker-Planck
+  equation\ // Springer-Verlag. 1984.
+\end{thebibliography}
+
+\bigskip
+
+\title{Modelling the dynamics of price fluctuations at~Russian stock
+  market}
+
+\author{Paramonov\,A.\,V., Shchetinin\,Ye.\,Yu.}
+
+\maketitle
+
+\begin{abstract}
+  The price fluctuations at Russian stock market are described by a
+  number of empirical effects or ``stylized facts''. We perform a
+  quantitative characterization of some of these effects, and propose
+  a model of the underlying stochastic process based on nonlinear
+  Fokker-Planck equation. We show how the model can be applied for
+  short-term forecast of stock prices and market index values.
+\end{abstract}
+
+\end{document}
