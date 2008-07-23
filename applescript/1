@@ -1,0 +1,7 @@
+tell application "Mori"
+  tell front document
+    set a to first item of selection
+    set b to second item of selection
+    set a's note to (a reference to a's) note & (a reference to b's note)
+  end tell
+end tell
