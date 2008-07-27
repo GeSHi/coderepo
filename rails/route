@@ -1,0 +1,42 @@
+module ActionController
+  class AbstractRequest
+    attr_reader :recognized_route
+    
+    def init_recognized_route_from_path_parameters
+      recognized_route = path_parameters.delete(:recognized_route) 
+    end
+  end
+
+  module Routing
+    
+    class RouteSet
+      def recognize_with_route(request)
+        result = recognize_without_route(request)
+        request.init_recognized_route_from_path_parameters
+        result
+      end
+      alias_method_chain :recognize, :route
+
+      def write_recognize_optimized_with_route
+        tree = segment_tree(routes)
+        body = generate_code(tree)
+        instance_eval %{
+          def recognize_optimized(path, env)
+            segments = to_plain_segments(path)
+            index = #{body}
+            return nil unless index
+            while index < routes.size
+              result = routes[index].recognize(path, env) and result[:recognized_route] = routes[index] and return result
+              index += 1
+            end
+            nil
+          end
+        }, __FILE__, __LINE__
+      end
+      alias_method_chain :write_recognize_optimized, :route
+
+    end
+  end
+end
+
+
