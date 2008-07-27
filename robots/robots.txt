@@ -1,0 +1,14 @@
+# robots.txt für meineseite.com
+# Diese Webcrawler schließe ich aus
+User-agent: Sidewinder
+Disallow: /
+ 
+User-agent: Microsoft.URL.Control
+Disallow: /
+ 
+# Diese Verzeichnisse/Dateien sollen nicht durchsucht werden
+User-agent: *
+Disallow: /default.html
+Disallow: /Temp/ # diese Inhalte verschwinden bald
+Disallow: /Privat/Familie/Geburtstage.html
+
