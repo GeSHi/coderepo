@@ -46,10 +46,12 @@ while ($file = readdir($dir)) {
         continue;
     }
     $covered_languages[] = $file;
-    echo $file . "\n";
 }
 
-echo "\n-- covered total: ". count($covered_languages) . "\n\n";
+sort($covered_languages);
+echo implode ("\n", $covered_languages);
+
+echo "\n\n-- covered total: ". count($covered_languages) . "\n\n";
 
 closedir($dir);
 
