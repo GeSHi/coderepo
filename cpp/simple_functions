@@ -16,4 +16,10 @@ double* h, double* s, double *v)
     ss *= (ll <= 1) ? ll : 2 - ll;
     *v = (ll + ss) / 2;
     *s = (2 * ss) / (ll + ss);
+    //junk for number testing
+    123
+    0777
+    0xff
+    4.2e1
+    4.2
 }
