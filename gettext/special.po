@@ -1,0 +1,17 @@
+# Kako se rijeka tacno zove kod nas?
+#: alpha.cpp:10
+#, fuzzy
+#| msgctxt "Short story"
+#| msgid "A record of the Witch River"
+msgctxt "Short story"
+msgid "Records of the Witch River"
+msgstr "Bilješka o Vješticjoj rijeci"
+
+#: bravo.cpp:300
+#, c-format
+msgid "One lich"
+msgid_plural "%d lichs"
+msgstr[0] "%d kosac"
+msgstr[1] "%d kosca"
+msgstr[2] "%d kosaca"
+msgstr[3] "Jedan kosac"
