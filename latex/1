@@ -1,3 +1,39 @@
-% Latex
-\section{Results}
-There is a 40\% increase of production between $a$ and $b$.
+% Beispieldokument
+\documentclass[a4paper, 11pt,german]{scrartcl}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+
+\makeatletter
+% Check for 'draft' mode - commands.
+\newcommand{\IfDraft}[1]{\ifx\@draft\@undefined \else #1 \fi}
+\makeatother
+
+\section*{test}
+
+\subparagraph{foo}
+
+\begin{document}
+	$ a = b + c $
+	\begin{equation}
+		a = b + c
+	\end{equation}
+	\begin{figure}
+		\includegraphics{Bild.png}
+	\end{figure}
+	\section{Einleitung}
+	Dies ist ein beliebig langer Satz ohne konkreten Hintergrund.
+	\cite[S. 22]{Mustermann}
+	\begin{table}[tb]
+		\centering
+		\begin{tabular}{ll}
+			links Spalte & rechte Spalte \\
+		\end{tabular}
+		\caption[Eine Testtabelle]{Testtabelle}
+		\label{tab:test}
+	\end{table}
+	Besondere Befehle: \_, \&, \% sollten auch funktionieren.
+\end{document}
