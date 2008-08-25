@@ -1,0 +1,41 @@
+//-----------------------------------------------------------------
+
+char[] foo = `a\`;
+//-- D ignores escaping of ` quote characters. This compiles:
+int main(char[][] args)
+{
+    char[] foo = `a\`;
+    printf("%.*s", foo);
+    return 0;
+}
+
+//-----------------------------------------------------------------
+
+char[] foo = r"a\";
+//-- same for above, the 'r' modifier means "raw", so it leaves all the escape characters as they are.
+//-- This compiles, too:
+int main(char[][] args)
+{
+    char[] foo = r"a\";
+    printf("%.*s", foo);
+    return 0;
+}
+
+//-----------------------------------------------------------------
+
+//--Also, I believe that these should be separately colored:
+
+// is a normal comment
+/// is a "documentation" comment (used when generating documentation from source), and thus has a different function than //
+
+/* is a normal
+multiline comment */
+/** is a documentation
+multiline comment (see ///) */
+
+//---------------------------------------------------------------------
+
+//Some escape char tests ...
+char[] foo = "\a\"\'\&quot;\U08154711\u1337\x42\066";
+
+//---------------------------------------------------------------------
