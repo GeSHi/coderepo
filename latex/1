@@ -36,4 +36,11 @@
 		\label{tab:test}
 	\end{table}
 	Besondere Befehle: \_, \&, \% sollten auch funktionieren.
+	\subsection*{Erläuterung}
+	Verschachtelte Befehle:
+	% Command for margin text with usefull style
+	\newcommand{\marginlabel}[1]{
+		\mbox{}\marginline{\hspace{0pt}\vspace{0pt}\footnotesize\sffamily #1}%
+	}%
+
 \end{document}
