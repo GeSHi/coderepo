@@ -5,7 +5,7 @@
 #| msgid "A record of the Witch River"
 msgctxt "Short story"
 msgid "Records of the Witch River"
-msgstr "Biljeöka o Vjeöticjoj rijeci"
+msgstr "Bilje≈°ka o Vje≈°ticjoj rijeci"
 
 #: bravo.cpp:300
 #, c-format

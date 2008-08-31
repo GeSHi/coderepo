@@ -1,0 +1,9 @@
+(defun get-ut-stats (document)
+  (multiple-value-bind (match regs)
+      (find-item-on-page document "div" "Threads: ([0-9,]+)\\s+Posts: ([0-9,]+)\\s+Members: ([0-9,]+)")
+    (when match
+      (let ((threads (parse-integer (remove #\, (aref regs 0)) :junk-allowed t))
+	    (posts (parse-integer (remove #\, (aref regs 1)) :junk-allowed t))
+	    (users (parse-integer (remove #\, (aref regs 2)) :junk-allowed t)))
+	`((:posts . ,posts) (:threads . ,threads) (:users . ,users))))))
+

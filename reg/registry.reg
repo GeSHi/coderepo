@@ -1,0 +1,8 @@
+REGEDIT4
+
+[HKEY_CURRENT_USER\Software\test]
+@="42"
+"foo"="bar"
+"binary"=hex:df,df,df,d4,56,b3,7f,35,46,24,56,9f,23,23,45,60
+"numerical"=dword:000006e4
+
