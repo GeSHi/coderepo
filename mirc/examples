@@ -1,0 +1,54 @@
+/join #RAUMNAME
+/notice NICKNAME TEXT
+/quit
+/var %zähler 1
+/set %username User
+%k_text = Ein kurzer Text
+$nick
+$nick(RAUMNAME,1)
+$nick(RAUMNAME,3).idle
+/joinall {
+  join #RAUM1
+  join #RAUM2
+  join #RAUM3
+}
+/joinall /join #RAUM1 | /join #RAUM2 | /join #RAUM3
+/summe { return $calc($1 + $2) }
+/addiere { msg $active Zählt man $1 und $2 zusammen erhält man $summe($1,$2) }
+Alias myrooms {
+  var %zähler 1
+  var %rooms
+  while (%zähler <= $chan(0)) {
+    %rooms = %rooms $chan(%zähler)
+    inc %zähler
+  }
+  return %rooms
+}
+Alias goaway {
+  if ($chan) {
+    msg $chan Bye @ All
+    timerleftchan 1 7 part $chan
+  }
+  else { echo -a Der Befehl geht nur in Raumfenstern! }
+}
+on 1:TEXT:!getränk &:#Testraum:{
+  if ($2 == Cola) { describe $chan gibt $nick eine Cola. }
+  elseif ($2 == Kaffee) { describe $chan gibt $nick einen Kaffee. }
+  elseif ($2 == Tee) { describe $chan gibt $nick einen Tee. }
+  else { msg $chan Sorry, dieses Getränk führen wir nicht! }
+}
+on @1:TEXT:!kick &:#Testraum:{
+  if (($nick isvoice $chan) && ($2 ison $chan)) {
+    kick $chan $2
+  }
+}
+on 1:TEXT:!tipp:#Testraum:{
+  echo -s Tipps triggert!
+  echo -s Mitgliedstatus ist: $read(Mitglieter.txt,s,$nick)
+  if ($read(Mitglieder.txt,s,$nick)) {
+    echo -s Mitgliedtest bestanden!
+    var %tipp $read(Tipps.txt)
+    echo -s Variable tipp ist: %tipp
+    msg $chan Dein Tipp lautet: %tipp
+  }
+}
