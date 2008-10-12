@@ -1,0 +1,18 @@
+clip1 = AVISource("video1.avi")
+clip2 = AVISource("video2.avi")
+
+return interlaced_dissolve(clip1,clip2,30) # dissolve from clip1 to clip2 over 30 frames
+
+function interlaced_dissolve(clip clip1, clip clip2, int iter)
+{
+  clip1  = clip1.SeparateFields()
+  evn1   = clip1.SelectEven()
+
+  odd1   = clip1.SelectOdd()
+  clip2  = clip2.SeparateFields()
+  evn2   = clip2.SelectEven()
+  odd2   = clip2.SelectOdd()
+  evn    = Dissolve(evn1,evn2,iter)
+  odd    = Dissolve(odd1,odd2,iter)
+  return   Interleave(evn,odd).Weave().DoubleWeave.SelectOdd()
+}

@@ -1,0 +1,32 @@
+Global Offset= 0.000 # Middle value of the sweep range being tested
+Global Scale = 0.250 # Scale the sweep range from +/- 1 second
+
+AVISource("VideoA.avi", True, "YUY2") # Select the input file
+
+AssumeFrameBased() # Correctly describe frame/field attribute
+AssumeTFF() # Correctly describe field order
+Trim(6115, -30) # Define the range of frames to investigate
+
+Bob(Height=240) # Double the FrameRate, Choose a good height
+BilinearResize(320, Height()) # Choose a good width
+
+DoDelayAudio(-1.0) ++ \
+DoDelayAudio(-0.8) ++ \
+DoDelayAudio(-0.6) ++ \
+DoDelayAudio(-0.4) ++ \
+
+DoDelayAudio(-0.2) ++ \
+DoDelayAudio( 0.0) ++ \
+DoDelayAudio(+0.2) ++ \
+DoDelayAudio(+0.4) ++ \
+DoDelayAudio(+0.6) ++ \
+DoDelayAudio(+0.8) ++ \
+DoDelayAudio(+1.0)
+
+AssumeFPS(8000.0 * FrameRate() / AudioRate(), True)
+
+Function DoDelayAudio(Clip Clip, Float Delay)
+{
+  Delay = (Delay * Scale) + Offset
+  Return DelayAudio(Clip, Delay).Subtitle("Delay " + String(Delay)).FadeIO(6)
+}
