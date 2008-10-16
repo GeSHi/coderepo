@@ -1,0 +1,109 @@
+  USES "Dictionary"
+  uses "FILE"
+
+ 
+  '-----------------------------------------------------------------------------
+  'Variable declaration
+  '-----------------------------------------------------------------------------
+  Dim T0, T1, T2, T3, T4, T9 AS quad
+
+ 
+  DIM MaxKeys       AS LONG VALUE 10000
+  DIM Counter       AS LONG
+  DIM tmpData       AS STRING
+  DIM Message       AS STRING
+  DIM tFormat       AS STRING VALUE "#0"
+  dim KeyFound      as long
+  dim NotFoundKeys  as long
+  '-----------------------------------------------------------------------------
+  'Confirm script execution
+  '-----------------------------------------------------------------------------
+  Message =  "This program will test Dictionary speed.\n"
+  Message += "" & MaxKeys & " keys/data pair will be added to a dictionary\n"
+  Message += "All keys will be searched back.\n"
+  Message += "Please press Yes to go on, NO to Stop\n"
+
+ 
+  DIM lResult AS LONG = MSGBOX(0, Message, %MB_YESNO, "Continue?")   
+  IF lResult <> %IDYES THEN
+    STOP
+  END IF
+
+ 
+  '------------------------------------------------------------------
+  ' Dictionary creation
+  '------------------------------------------------------------------
+  T0 = GetTickCount       '---Start timer for Dictionary creation
+  
+  '---Define a LONG that will hold a reference to a new dictionary
+  DIM testDict AS LONG
+
+ 
+  '---Create a new dictionary with 1000 unique single buckets
+  TestDict = Dictionary_Create(MaxKeys * 2, %true)
+
+ 
+  '------------------------------------------------------------------
+  ' Dictionary add keys
+  '------------------------------------------------------------------
+  T1 = GetTickCount       '---Start timer for Dictionary fill
+
+ 
+  '---Here the key name will be computer using KEY followed by the counter
+  '---So dictionary will contain the following keys: KEY000001, KEY000002, ..., KEY010000, KEY009999
+  '---Random data will be associated with every key
+  for Counter = 1 to MaxKeys
+    Dictionary_Add( _
+                    testDict, _
+                    "KEY" & format$(Counter, "000000"), _
+                    repeat$(rnd(100, 1000), _
+                    chr$(rnd(0,255))) _
+                  )
+  next
+  
+  '------------------------------------------------------------------
+  ' Dictionary search keys
+  '------------------------------------------------------------------
+  T2 = GetTickCount       '---Start timer for Dictionary search
+
+ 
+  for Counter = 1 to MaxKeys
+    KeyFound = Dictionary_exists(testDict, "KEY" & format$(Counter, "000000") )
+    if KeyFound = %FALSE then incr NotFoundKeys
+  next
+
+ 
+  '-----------------------------------------------------------------------------
+  ' Stop clock and show results with some internal counters
+  '-----------------------------------------------------------------------------
+  T9 = GetTickCount
+
+ 
+  Message = "Test results:" & $CRLF
+  Message += " - number of key/data pairs                   " _
+              & $tab & $tab & FORMAT$(MaxKeys) & $CRLF
+  Message += " - time to create dictionary                  " _
+              & $tab & $tab & FORMAT$(T1 - T0, tFormat) & " msec." & $CRLF
+  Messsage += " - time to add all keys into the dictionary   " _
+              & $tab & FORMAT$(T2 - T1, tFormat) & " msec." & $CRLF
+  Message += " - time to search all keys into the dictionary" _
+              & $tab & FORMAT$(T9 - T2, tFormat) & " msec." & $CRLF
+  Message += repeat$(80, "-")  & $CRLF
+  Message += "Total execution time" _
+              & $tab & $tab & $tab & FORMAT$(T9 - T0, tFormat) & " msec." & $CRLF
+  Message += "Number of keys inside dictionary:" _
+              & $tab & $tab & Dictionary_Count(testDict) & $CRLF
+  Message += "Number of keys not found during search:" _
+              & $tab & NotFoundKeys & $CRLF
+  Message += repeat$(80, "-")  & $CRLF
+  Message += "Total memory used by Dictionary:" & $tab & $tab & _
+              Dictionary_meminfo(testDict, %Dictionary_MemInfo_Total) & " bytes." & $CRLF
+  Message += "Memory used by Dictionary keys:" & $tab & $tab & _
+              Dictionary_meminfo(testDict, %Dictionary_MemInfo_Keys) & " bytes."  & $CRLF
+  Message += "Memory used by Dictionary data:" & $tab & $tab & _
+              Dictionary_meminfo(testDict, %Dictionary_MemInfo_Data) & " bytes."  & $CRLF
+  MSGBOX(0, Message)
+
+ 
+  '---Remove the whole dictionary and all its keys and data from memory
+  Dictionary_Free(TestDict)
