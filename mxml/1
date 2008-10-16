@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mx:Application xmlns:mx="http://www.macromedia.com/2003/mxml">
+
+    <mx:WebService id="wsStock"
+wsdl="http://services.xmethods.net/soap/urn:xmethods-delayed-quotes.wsdl">
+
+        <mx:operation name="getQuote">
+            <mx:request>
+                <symbol>{symbol.text}</symbol>
+            </mx:request>
+        </mx:operation>
+    </mx:WebService>
+
+    <mx:Label text="Enter a symbol:"/>
+    <mx:HBox>
+        <mx:TextInput id="symbol"/>
+        <mx:Button label="Get Quote" click='wsStock.getQuote.send()'/>
+    </mx:HBox>
+
+    <mx:Label id="quote" fontWeight="bold" text="{wsStock.getQuote.result}"/>
+
+</mx:Application>
