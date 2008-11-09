@@ -1,0 +1,62 @@
+/*******************************************************
+ * Example ProvideX Object class
+ * $Id$: website.pvc 79 2008-10-24 20:19:59Z wilderj $
+ *
+ * This object will invoke the system default browser
+ * to navigate to a specified URL
+ *******************************************************/
+def class "website" create required delete required
+    property url$
+    property debug set SetDebug
+    function Go() Navigate
+    function Go(_url$) Navigate
+    local True = 1
+    local False = 0
+    local navCount, navHistory
+end def
+ 
+! This subroutine is automatically executed upon object instatiation
+on_create:
+    url$ = "http://www.google.com"  ! Set the default URL
+    ! Open a memory sort file for storing history
+    open object (gfn)"*memory*"; navHistory = lfo
+return
+ 
+on_delete:
+    close (navHistory,err=*next)
+return
+ 
+SetDebug:
+    enter _d
+    if _d then {
+        debug = True
+    } else {
+        debug = False
+    }
+return
+!
+! This routine will work if the url is set as a property or
+! if the url is passed in the function
+Navigate:
+    enter _url$,err=*next
+    _return_value = False
+    if nul(_url$) then {
+        _url$ = url$
+    }
+    if len(_url$) then {
+        ! Print to channel 0 (stdout)
+        print (0,err=*next) "Opening web browser to ",url$,'LF'
+        navHistoryCount = 0
+        read (navHistory, key=_url$, err=*next)navHistoryCount
+        navHistoryCount += 1 ! increment by one
+        navCount += 1
+        write (navHistory, key=_url$)navHistoryCount
+        system_help _url$
+        if debug then {
+            m$ = "You have navigated to "+_url$+" "+str(navHistoryCount)+" time"+tbl(navHistoryCount>1,"","s")+"."
+            m$+=sep+"You have used this function "+str(navCount)+" time"+tbl(navCount>1,"","s")+"."
+            msgbox m$,"Debug Info","OK,INFO"
+        }
+        _return_value = True
+    }
+return _return_value
