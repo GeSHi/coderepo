@@ -1,0 +1,156 @@
+$scalar              ### scalar
+@array               ### array
+%hash                ### hash
+*glob                ### glob
+&sub                 ### sub
+<filehandle>         ### file handle
+<$filehandle>        ### file handle as scalar
+@$foorray_ref        ### An array reference as a dereferenced list (copy)
+%$hash_ref           ### Same for a hash
+$$scalar_ref         ### Same for scalar
+&$code_ref           ### Same for code
+*$code_ref           ### Same for code
+$#array              ### The last element of an array
+$foo ne $bar;        ### not equal (string)
+$foo eq $bar;        ### equal (string)
+$foo = <<EOP;
+This is some heredoc text
+EOP;                 ### heredoc (matches /<<\w+;/)
+$foo{$bar}           ### Hash access
+$foo{$bar}{$fubar}   ### Multi-level hash access
+$foo->bar            ### Object access
+$foo->bar->fubar     ### Multi-level hash access
+while(<>)            ### Reading a file
+$foo cmp $bar        ### ascii comparison
+$foo <=> $bar        ### numeric comparison (spaceship)
+\$foo                ### Reference to a scalar
+\@foo                ### Ref to an array
+\%foo                ### Ref to a hash
+\*foo                ### Ref to a glob
+\&foo                ### Ref to code
+\\$foo               ### Ref to a reference to a scalar
+$foo & $bar          ### bitwise and
+$foo | $bar          ### bitwise or
+$foo ? $bar : $fubar ### ternary conditional operation
+$foo . $bar          ### concatenation
+$foo <<= $bar        ### assignment bitwise shift left
+$foo >>= $bar        ### assignment bitwise shift right
+$foo |= $bar         ### assignment bitwise or
+$foo ||= $bar        ### assignment symbolic or
+$foo += $bar         ### assignment addition
+$foo &= $bar         ### assignment bitwise and
+$foo ^= $bar         ### assignment bitwise exclusive or
+$foo **= $bar        ### assignment exponentiation
+$foo &&= $bar        ### assignment logical and
+$foo .= $bar         ### assignment concatenation
+$foo %= $bar         ### assignment modulus
+$foo *= $bar         ### assignment multiple
+$foo -= $bar         ### assignment subtract
+$foo x= $bar         ### assignment repetition
+$foo /= $bar         ### assignment divide
+$foo = !!$bar        ### boolean interpretation (really two !s)
+$foo = 'bar'         ### uninterpolated string
+$foo = "bar"         ### interpolated string
+$foo = `bar`         ### system command execution
+($foo and $bar)      ### logical and
+($foo xor $bar)      ### logical exclusive or
+($foo or $bar)       ### logical or
+$foo << $bar         ### bitshift
+$foo >> $bar         ### bitshift
+$foo++               ### increment after
+$foo--               ### decrement after
+++$foo               ### increment before
+--$foo               ### decrement before
+$foo ** $bar         ### exponent
+$foo ~ $bar          ### bitwise not
+$foo x $bar          ### repetition operator
+if ($foo <  $bar)    ### less than (numbers)
+if ($foo >  $bar)    ### greater than (numbers)
+if ($foo <= $bar)    ### less than or equal to (numbers)
+if ($foo >= $bar)    ### greater than or equal to (numbers)
+if ($foo lt $bar)    ### less than (strings)
+if ($foo gt $bar)    ### greater than (strings)
+if ($foo le $bar)    ### less than or equal to (strings)
+if ($foo ge $bar)    ### greater than or equal to (strings)
+if ($foo ^ $bar)     ### bitwise exclusive or
+for ($foo .. $bar)   ### range operator
+&foo('a',$bar)       ### comma
+&foo(a=>$bar)        ### comma alternate (any list context)
+
+Package::Subpackage  ### Namespace delimiter
+$Pgk::level::scalar  ### package level scalar ($scalar in Pkg::level)
+@Pgk::level::array   ### package level array  ($foorray in Pkg::level)
+%Pgk::level::hash    ### package level hash   ($hash in Pkg::level)
+&Pgk::level::sub     ### package level sub    ($scalar in Pkg::level)
+*Pgk::level::glob    ### package level glob   ($scalar in Pkg::level)
+\4                   ### Ref to number (yeah, that's useful sometimes).
+$_                   ### The default or implicit variable.
+@_                   ### Subroutine parameters.
+$a                   ### sort comparison routine var (first value)
+$b                   ### sort comparison routine var (second value)
+$1 ... $9            ### Regexp parenthetical capture holders.
+$&                   ### Last successful match (degrades performance).
+$`                   ### Prematch for last successful match string (degrades performance).
+$'                   ### Postmatch for last successful match string (degrades performance).
+$+                   ### Last paren match.
+$^N                  ### Last closed paren match.
+@+                   ### Offsets of ends of successful submatches in scope.
+@-                   ### Offsets of starts of successful submatches in scope.
+$*                   ### Boolean for multi-line matching. Deprecated. Use /s and /m.
+$^R                  ### Last regexp (?{code}) result.
+$.                   ### Current line number (or record number) of most recent filehandle.
+$/                   ### Input record separator.
+$|                   ### Output autoflush. 1=autoflush, 0=default
+$,                   ### Output field separator (lists)
+$\                   ### Output record separator.
+$"                   ### Output list separator. (interpolated lists)
+$;                   ### Subscript separator. (Use a real multidimensional array instead.)
+$#                   ### Output format for printed numbers (deprecated).
+$%                   ### Page number for currently selected output channel.
+$=                   ### Current page length.
+$-                   ### Number of lines left on page.
+$~                   ### Format name.
+$^                   ### Name of top-of-page format.
+$:                   ### Format line break characters
+$^L                  ### Form feed (default "\f").
+$^A                  ### Format Accumulator
+$?                   ### Child error. Status code of most recent system call or pipe.
+$!                   ### Operating System Error. (What just went 'bang'?)
+%!                   ### Error number hash
+$^E                  ### Extended Operating System Error (Extra error explanation).
+$@                   ### Eval error.
+$$                   ### Process ID
+$<                   ### Real user id of process.
+$>                   ### Effective user id of process.
+$(                   ### Real group id of process.
+$)                   ### Effective group id of process.
+$0                   ### Program name.
+$^O                  ### Operating System name.
+$]                   ### Version and patch number of perl interpreter.
+$^C                  ### Current value of flag associated with -c switch.
+$^D                  ### Current value of debugging flags
+$^F                  ### Maximum file descriptor.
+$^I                  ### Value of the -i (inplace edit) switch.
+$^M                  ### Emergency Memory pool.
+$^P                  ### Internal variable for debugging support.
+$^R                  ### Last regexp (?{code}) result.
+$^S                  ### Exceptions being caught. (eval)
+$^T                  ### Base time of program start.
+$^V                  ### Perl version.
+$^W                  ### Status of -w switch
+$^X                  ### Perl executable name.
+ARGV                 ### Filehandle iterates over files from command line (see also <>).
+$ARGV                ### Name of current file when reading <>
+@ARGV                ### List of command line args.
+ARGVOUT              ### Output filehandle for -i switch
+@F                   ### Autosplit (-a mode) recipient.
+@INC                 ### List of library paths.
+%INC                 ### Keys are filenames, values are paths to modules included via use, require, or do.
+%ENV                 ### Hash containing current environment variables
+%SIG                 ### Signal handlers.
+$[                   ### Array and substr first element (Deprecated).
+$foo =~ /bar/;       ### regexp match
+$foo !~ /bar/;       ### regexp match inversion
+$$foo{$bar}          ### Dereferenced hash before accessing a value
+${$foo{$bar}}        ### Disambiguated referencing.  Not sure if this is a failure...
+$_[$foo]             ### Accessing the ${foo}th argument in a sub.
