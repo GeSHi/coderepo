@@ -1,0 +1,41 @@
+EXPLICIT_DECLARATIONS
+FILE_PATH, FILE_NAME1, FILE_NAME2, FILE1, FILE2 AS TEXT
+
+FILE_PATH = "C:\\Temp\\"
+FILE_NAME1 = "testfile1.txt"
+FILE_NAME2 = "testfile2.txt"
+FILE1 = FILE_PATH + FILE_NAME1
+FILE2 = FILE_PATH + FILE_NAME2
+
+CONTINUE AS INTEGER
+
+IF FIRST_RECORD THEN
+    CONTINUE = 0
+    INSERT_C_CODE
+    #include <stdio.h> /* For file handling functionality */
+    FILE *i_file, *o_file; /* File pointers for referencing the input and output files. */
+    int c; /* Used to hold the value of a character byte whilst copying data between files. */
+    i_file = fopen (DCS_FILE1.c_str(), "r");
+    if( i_file == NULL )
+        DCS_CONTINUE = 1;
+    else {
+        END_C_CODE MESSAGE("Output file already exists!") INSERT_C_CODE
+        o_file = fopen (DCS_FILE2.c_str(), "w");
+        if( o_file == NULL ) {
+            END_C_CODE MESSAGE("Failed to copy output file to " + FILE_NAME2 + ". Program terminated.") INSERT_C_CODE
+        }
+        else {
+            while( (c = getc( i_file)) != EOF )
+                putc (c, o_file);
+            END_C_CODE MESSAGE("Old output file saved as " + FILE_NAME2 + ".") INSERT_C_CODE
+            DCS_CONTINUE = 1;
+            fclose (o_file);
+        }
+        fclose (i_file);
+    }
+    END_C_CODE
+ENDIF
+
+IF CONTINUE = 1 THEN
+    ; Insert the rest of your DCS program here.
+ENDIF
