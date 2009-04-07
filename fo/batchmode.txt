@@ -1,0 +1,9 @@
+====== Automatischer Programmablauf ======
+
+abas bietet speziell bei Lader- oder EDP-Operation die Systemvariable **''batchmode''** an. Diese Variable steht global zur Verfügung. Sie ist vom booleschen Typ. Liefert die ''MEHR'' = true befindet sich das Programm im Batchmodus.
+
+<note>
+Sollten verkürzte Variablennamen erlaubt sein, so kann man die Variable auch mit ''batch'' ansprechen.
+</note>
+
+Siehe auch [[abas:java:batchmode]]

@@ -1,0 +1,223 @@
+====== Datum und Zeit ======
+
+Datum und Zeitwerte sind in FO beschränkt komfortabel. Folgende Datums-Variablentypen gibt es in abas.
+
+^Typ^Beschreibung     ^Beispiel  ^
+|gd |Normales Datum   |02.01.2007|
+|gd2|Datum zweistellig|02.01.07  |
+|gw |Kalenderwoche    |35/2006   |
+|gw2|KW zweistellig   |35/06     |
+
+<note warning>
+Mit Datums- und Zeitwerte sollten in Java gearbeitet werden. Denkt man an Terminverwaltung etc. ist die Benutzung der Java-API einfacher und vor allem Dingen besser zu warten.
+</note>
+
+===== Uhrzeit abfragen =====
+
+Die aktuelle Uhrzeit ist der Systemvariable ''zeit'' gespeichert.
+
+===== Datum vorbelegen =====
+
+Beispiel Datum mit morgigen Datum vorbelegen, wenn morgen kein Arbeitstag ist, dann nehme den nächsten Arbeitstag
+
+<code>
+.fo M|ybis = (datum + 1) & 0
+</code> 
+
+===== Mit Datumswerten rechnen =====
+
+Die Addition und Subtraktion erfolgt mit Tagen. 
+
+==== Rechnen mit ganzen Tagen ====
+
+Beispiel heutiges Datum - 20 Tage
+<code fo>
+.art gd xddatum ? _defined(xdatum)
+.art gd xdziel ? _defined(xdatum)
+.fo xddatum = 'datum'
+.fo xdziel = xddatum - 20
+</code>
+
+<note important>
+Ist das Datum der 04.01.2008, so wird steht in xdziel das Ergebnis = 15.12.2007. Dies ist ein Samstag. Zur Bestimmung von Arbeitstagen geht man anders vor.
+</note>
+
+Für Bestimmung des nächsten Arbeitstages (Mo. 17.12.2007) muss folgender Code verwendet werden.
+<code fo>
+.fo xddatum = xddatum & 0
+</code>
+
+<note important>
+Das & liefert als Ergebnis immer einen Arbeitstag!
+</note>
+
+==== Rechnen mit Wochen ====
+
+Die Addition erfolgt mit Kalendertagen. Eine Woche besteht aus 7 Tagen. Vier Wochen sind also 28 Tage.
+
+Beispiel Subtraktion von vier Wochen
+<code fo>
+.. Aktuelles Datum - 4 Wochen
+.art gd xdatum ? _defined(xdatum)
+.fo xdatum = 'datum'
+.fo xdatum = xdatum - 28
+.fo xdatum = xdatum & 0
+.fo M|yvon = 'xdatum'
+</code>
+
+Bei einem Datum von 04.01.2008 wird in yvon das Datum 07.12.2007 angezeigt. Achtung dies ist der nächste Arbeitstag und nicht Kalendertag!
+
+==== Rechnen mit Zeitdauern ====
+
+<code fo>
+.art GD19 xdtag xderg
+.art GP4 xddauer
+.fo xdtag   = "16.09.2005 14:35:00"
+.fo xddauer = "6D4h25m"
+.fo xderg = xdtag + xddauer
+'xderg' = ergibt 22.09.2005 19:00:00
+</code>
+
+===== Arbeitstage bestimmen =====
+
+
+Mit diesem Programm lassen sich die Arbeitstage in der Woche ermitteln.
+
+<code fop>
+.art datum xd1 xd2 xd3 xd4     xdleer
+.art text xtta1 xtta2
+.art int xitage xianz
+...............................
+!A:
+Arbeitstage im Zeitraum 
+.lesen "von " xd1
+.ende ? xd1=xdleer 
+.lesen "... bis " xd2
+.fo xtta1 = xd1//1
+.fo xtta2 = xd2//1
+.fo xitage = xd1 & (xd2+1)
+..      .fo xitage = xd1 & xd2
+'   xtta1' 'xd1   ' - '   xtta2' 'xd2   ' = ' xitage' Arb.Tage (&+1-Funktion)
+.fo xitage = xd1 & xd2
+'   xtta1' 'xd1   ' - '   xtta2' 'xd2   ' = ' xitage' Arb.Tage (&-Funktion)
+
+!B:
+.fo xitage = 0
+.fo xianz = 0
+.fo xd3 = xd1
+.fo xd4 = xd1
+!B1:
+.fo xitage = xitage + 1 ? xd4 <= xd2
+.fo xianz = xianz + 1
+.fo xd3 = xd3 + 1
+.fo xd4 = xd4 & 1
+.weiter B1 ? xd3 <= xd2
+'   xtta1' 'xd1   ' - '   xtta2' 'xd2   ' = ' xitage' Arbeitstage
+'   xtta1' 'xd1   ' - '   xtta2' 'xd2   ' = '  xianz' Kalendertage
+----------------------------------------------------------------------------
+.weiter A
+
+</code>
+
+===== Aktuelles Datum ermitteln =====
+
+Das aktuelle Datum ist in der Systemvariable ''datum'' gespeichert. Um es zu verwenden schreiben Sie im FO einfach datum mit Auswertungszeichen.
+
+<code FO>
+.art gd xdnow ? _defined(xdatum)
+.fo xdnow = 'datum'
+</code>
+
+===== Wochentag ermitteln =====
+
+Mit Hilfe der Modulo Funktion kann der Wochentag ermittelt werden.
+
+Beispiel:
+<code>
+.. datum = "21.09.06"
+datum // 7 = 4
+</code>
+
+Rückgabewerte
+<code>
+1 = Montag
+2 = Dienstag
+3 = Mittwoch
+4 = Donnerstag 
+5 = Freitag
+6 = Samstag
+7 = Sonntag
+</code>
+
+===== Erster Tag des Jahres =====
+
+Um den ersten Tag eines Jahres zu ermitteln, muss man nur den 1. Januar ("0101") vor dem Jahr setzen und in das Datums-Feld befüllen.
+
+Beispiel
+<code fo>
+.fo M|yvon = ('T|datum:8'<<4) + "0101"
+</code>
+
+<note important>
+Das Beispiel geht von einer vierstelligen Jahresangabe aus.
+</note>
+
+<code fo>
+.. set first day of the current year as start date
+.fo M|adatum = ('T|datum:8'<<4) + "0101" 
+.fo M|edatum = "."
+</code>
+
+Für zweistellige Datumsangaben sieht der Code so aus.
+
+<code fo>
+.. set first day of the current year as start date
+.fo M|adatum = ('T|datum'<<2) + "0101" 
+.fo M|edatum = "."
+</code>
+
+===== Letzter Tag eines Jahres =====
+<code fo>
+.fo M|ybis = "31.12." + ('datum:4'>>4)
+</code>
+
+===== Jahr ermitteln =====
+
+Das Jahr ermittelt man, in dem man die letzten vier bzw. zwei Stellen eines Datums herausschneidet.
+
+<note>
+Um eine vierstellige Jahresangabe zu erhalten, muss das Datum auch vierstellig formatiert werden -> 'datum:4'
+</note>
+
+<code fop>
+.fo xtjahr = 'datum'>>2
+.fo xtjahr = 'datum:4'>>4
+</code>
+
+===== Monat ermitteln =====
+
+<code fo>
+.fo xtmonat = (('datum:4')<<-3)>>-5
+</code>
+
+===== Tag ermitteln =====
+
+<code fo>
+.fo xttag   = ('datum')<<2
+</code>
+
+===== Monatsnamen ermitteln =====
+
+{{:abas:dev:monatsnamen_ermitteln.png  |Monatsnamen ermitteln}}
+
+Eine Selbst-Implementierung würde wie dieses Easy-Case Struktogramm aussehen. abas bietet das Programm ''[[.datmontext|DATMONTEXT]]'' an. Dieses erwartet als Eingabe ''xxddate'' (Datum) und liefert ''xxtmonth'' (Text) den Monatsnamen.
+
+===== Umwandlung GD in GD2 Typ =====
+
+Wenn man aus 01.01.2008 01.01.08 machen möchte. Warum auch immer.
+
+<code>
+.art gd2 xtbis ? _defined(xtbis)
+.fo xtbis = 'M|kbis'<<6  + 'M|kbis'>>2
+</code>
+

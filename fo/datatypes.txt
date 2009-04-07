@@ -1,0 +1,44 @@
+====== Datentypen ======
+
+===== Text =====
+
+===== Zeit =====
+
+^Kürzel ^Beschreibung         ^Format    ^Beispiel^Version^
+|  GD2  |Datum, Jahr 2-stellig|dd.mm.yy  |16.10.07||
+|  GD   |Datum, vierstellig   |dd.mm.yyyy|16.10.2007||
+|  GD14  |sortierfähiges Datum + Zeit|yyyymmddhhmmss|20071016172252|2005r2n00|
+|  GD19  |Datum und lokale Uhrzeit   ||16.10.2007 17:25:52|2005r2n00|
+|  GD20  |Datum im UTC-Format        ||16.10.2007 11:25:12|2005r2n00|
+|  GP1   |Zeitdauer in Tagen         ||||
+|  GP2   |Zeitdauer in Tagen und Stunden||||
+|  GP3   |Tage, Stunden, Minuten        ||||
+|  GP4   |Tage, Stunden, Minunten und Sekunden||||
+
+Eingabemöglichkeiten bei GD19
+<code>
+.. aktuelle Zeit
+
+. = 16.10.2007 11:10:24
+
+.. nur Datum
+< = 16.10.2007 00:00:00
+
+.. Mitte Oktober
+=10M = 16.10.2007 00:00:00 
+</code>
+
+Beispiele für Zeitdauer
+<code>
+1 Tag -> 1D
+1 Tag und 15 Stunden -> 1d15h
+3 Stunden, 15 Min -> 3h15m
+</code>
+
+<note>
+Bei Zeitdauern erfolgt eine automatische Umrechnung in Tage, Stunden, Minuten und Sekunden.
+</note>
+
+<note warning>
+Achtung: Bei Zeitdauern ist die Verwendung casesensitiv 1D = 1 Tag aber nicht 1d = 1 Tag.
+</note>

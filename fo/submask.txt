@@ -1,0 +1,14 @@
+====== Automatisches Aufrufen einer Teilmaske ======
+
+^ab Version 2007^
+Das Aufrufen einer Teilmaske erfolgt durch Maskenvorbelegung im Tippkommando. Dazu nimmt man ein einfach einen Feldnamen, der in der Submaske enthalten ist.
+
+Eine Submaske im abas Standard befindet sich in der Finanzbuchhaltung -> Debitorenbuchhaltung -> Offene Posten ausbuchen.
+
+{{:abas:dev:submaske.png|Submaske aufrufen}}
+
+Beispiel: Aufruf von Teilmaske Buchungsdaten in Offene Posten ausbuchen
+<code fo>
+.fo xtcmd = "<Verkauf><Zahlung>,offene Posten ausbuchen ? [pos]=0:beleg"
+.kommando -PARALLEL 'xtcmd'
+</code>

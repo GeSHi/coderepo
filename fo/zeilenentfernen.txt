@@ -1,0 +1,44 @@
+====== Zeile entfernen ======
+
+MACHE zum Anlegen und Löschen von Zeilen
+
+<code>
+  .MACHE [MASKE] ZEILE [+|-|--][O] 
+</code>
+
+legt eine Zeile an bzw. löscht eine oder alle Zeilen beim Puffer H (aber hier nur im Bezug auf Zusatzdateien) und M.
+In EFOPs ist das Anfügen und Löschen von Zeilen erlaubt, wenn die Anwendung es erlaubt, d.h. wenn der Benutzer es darf.
+ In KFOPs ist es nur in neu angelegten Objekten und in Zusatzdateien erlaubt.
+
+Die Optionen haben folgende Bedeutungen:
+
+
+|MASKE|Die Operation soll im Puffer M ausgeführt werden. Fehlt die Angabe, wird sie in Puffer H ausgeführt.|
+|ZEILE|Die Option muss bei Zeilenoperationen angegeben werden.|
+|+|Fügt eine Zeile nach der aktuellen Zeile ein. Die Option + ist der Standardwert (darf weggelassen werden).|
+|-|Löscht die aktuelle Zeile.|
+|--|Löscht alle Zeilen.|
+|O|Optimierung: Die Option bewirkt eine Beschleunigung der Ausgabe. Die Angabe muss direkt nach dem Plus- oder Minuszeichen stehen.|
+
+<code>
+.MACHE [MASKE] ZEILE [+]
+</code>
+
+hängt eine Zeile an die aktuelle Tabellenzeile an. Gleichzeitig wird auf die erzeugte Zeile positioniert. Eine Anfügung nach dem Kopfteil ist gleichbedeutend mit einer Einfügung vor der bzw. dem Erzeugen der ersten Tabellenzeile. Zeilen, die nur leere Felder enthalten, werden bei .BRINGE herausgefiltert.
+
+<code>
+.MACHE ZEILE -
+</code>
+
+ entfernt die aktuelle Tabellenzeile.
+
+<code>
+ .MACHE ZEILE --
+</code>
+ entfernt alle Tabellenzeilen.
+
+''.MACHE ZEILE'' kann nur auf dem Maskendatensatz (Zusatz MASKE) oder einem gesperrten (.HOLE SPERREN) oder neu erzeugten (.MACHE) Satz ausgeführt werden!
+
+siehe auch
+
+  * [[abas:edp:zeilenentfernen]]

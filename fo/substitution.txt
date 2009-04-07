@@ -1,0 +1,21 @@
+====== Textersetzung ======
+
+Es kommt manchmal vor, dass man Teile eines Textes durch andere ersetzen möchte.
+
+Dazu kann man die [[http://www.abas.de/sub_de/partner/help/hd/html/frame/9.1.14.html#9.1.14.3|Regularexpressions ]] benutzen.
+
+Sonderzeichen wie z. B. das \ und / müssen durch den [[http://www.bernhard-saalfeld.de/hex.htm|Hexadezimalwert]] angegeben werden.
+
+
+  Beispiel:
+  .fo xtpfad = 'xtpfad'  * "+LX/#5CX/#2FX/" 
+
+Ersetzt alle \ durch ein /
+Praktisch, wenn man einen Windowspfad in einen Unixpfad konvertieren muss.
+
+^Wichtige Sonderzeichen^^
+|\|5CX|
+|/|2FX|
+|:|3AX|
+
+Seit der Version 2007 gibt es auch die [[http://www.abas.de/sub_de/partner/help/hd/html/frame/9.8.5.html#9.8.5.4|Funktion ]] regreplace die das ganze etwas komfortabler gestaltet.

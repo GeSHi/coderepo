@@ -1,0 +1,13 @@
+===== Variablenarten =====
+
+Häufig genutzte Variablenarten
+
+Deklaration von Boolean-Feld xbverfuegbar
+<code fo>
+.art B xbverfuegbar ? _defined(xbverfuegbar)
+</code>
+
+Deklaration von Integer Zahl (2 stellig und nur positive Werte> xbziffer
+<code fo>
+.art IP2 xiziffer ? _defined(xbziffer)
+</code>

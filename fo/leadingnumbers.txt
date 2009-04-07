@@ -1,0 +1,5 @@
+====== Fuehrende Nullen entfernen ======
+
+Anhand dieses Algorithmus werden führende Nullen entfernt.
+
+{{:abas:dev:abas_zahlen_fnullen.png|Algorithmus}}

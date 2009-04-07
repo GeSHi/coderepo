@@ -1,0 +1,54 @@
+====== Entwicklungswerkzeuge ======
+
+===== Easycase =====
+
+Easycase ist ein Tool für FO, mit dem Struktogramme gezeichnet werden können. Mit Easycase wird aus dem Struktogramm Programmcode generiert.
+
+Meine Meinung: An sich ein schönes Tool, hat leider nur ein paar Kinderkrankheiten und ist an vielen Stellen umständlich zu bedienen (z. B. Dateimanagement).
+
+
+
+
+===== Generierung =====
+
+Für die Generierung habe ich ein eigenes Skript geschrieben, da diese auf jeden Fall funktioniert. Bei dem Skript von Easycase werden vereinzelt die Dateirechte nicht richtig gesetzt.
+
+Programmkopplung  von easycase
+<code>
+c:\easycase\localeks.bat %GENFILE% 
+  %SOURCEPATH% 
+  c:/easycase/ 
+  gsgkg-entw 
+  cx9swe1 
+  c:/easycase/ 
+  %PROMPT:<dir>% 
+  %GENNAME%
+</code>
+
+Inhalt von batch-Datei
+<code>
+@echo OFF
+REM echo GENFILE       = %1
+REM echo SOURCEPATH    = %2
+REM echo Pfad für rcp  = %3
+REM echo Mandant       = %4
+REM echo Maschine      = %5
+REM echo Pfad für easy = %6
+REM echo Verzeichnis   = %7
+REM echo GENNAME       = %8
+set NETUSER=%4
+c:\easycase\easy2eks %1 %2 %3 %4 %5 %6
+REM C:\Programme\PuTTY\pscp.exe -pw geheim %1 %4@%5:%7/%8
+C:\Programme\PuTTY\pscp.exe -pw geheim %2%8 %4@%5:%7/%8
+C:\Programme\PuTTY\plink.exe -batch -l %4 -pw geheim %5 abasmake %7/%8
+PAUSE
+del %
+</code>
+
+Inhalt von Skript abasmake - wegen Umlauten und Dateirechte
+<code bash>
+#!/bin/sh
+
+dos2unix  $1
+chmod 660 $1
+</code>

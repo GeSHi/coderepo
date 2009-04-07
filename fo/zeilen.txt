@@ -1,0 +1,15 @@
+====== Zeilen holen ======
+
+Ziel: Innerhalb einer Maske Positionen aus Tabelle laden
+
+Befindet man sich auf einen Maskenereignis kann man mit 
+
+<code>
+.hole MASKE ZEILE
+</code>
+
+die erste Position in der Maske lesen. 
+
+<note important>
+Die Daten stehen **nicht** im hole-Puffer (h-Puffer) sondern im Masken-Puffer (m-Puffer). Daher müssen sie die Feldnamen mit ''M|'' ansprechen. Beispiel -> ''M|preis''
+</note>

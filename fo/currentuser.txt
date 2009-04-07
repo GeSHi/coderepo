@@ -1,0 +1,7 @@
+===== Aktuellen Benutzer ermitteln =====
+
+Wenn sich ein Benutzer anmeldet, dann steht sein **Passwortdatensatz** zur Verfügung. Um jetzt einen vernünftigen Namen zu erhalten ruft man über den Querverweis das Feld name auf. Eine Pflege wird hier vorausgesetzt.
+
+<code>
+T|passw^name
+</code>

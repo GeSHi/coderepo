@@ -1,0 +1,8 @@
+===== Überprüfen ob Variable bereits existiert =====
+Mit der Funktion ''defined'' wird geprüft, ob eine Variable bereits existiert.
+
+<code>
+defined(variablenname)
+</code>
+
+Rückgabewert= ja, nein bzw. true, false

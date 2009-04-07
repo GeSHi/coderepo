@@ -1,0 +1,17 @@
+====== Normieren ======
+
+Inhalte von Feldern können normiert werden.
+
+  * Kleinbuchstaben werden in Großbuchstaben umgewandelt.
+  * Umlaute ausgeschrieben
+
+<note tip>
+Die Normierung können Sie für das Befüllen von Suchwörtern verwendet.
+</note>
+
+Mit fop
+<code fo>
+.fo xttext = "fo ist extrem scheiße"
+.fo xttext = -'xttext' 
+.. jetzt steht in xttext FO IST EXTREM SCHEISSE
+</code>

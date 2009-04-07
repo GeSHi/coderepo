@@ -1,0 +1,73 @@
+====== DATMONTEXT ======
+
+Sourcecode des Programms
+
+<code FO>
+..!interpreter german translate
+..*****************************************************************************
+..
+..  FOP-Name       : DATMONTEXT
+..  Datum          : 12.01.03
+..  Version        : 1.0
+..  Autor          : male
+..  Verantwortlich : male
+..  Kontrolle      :
+..  Copyright      : (c) 1990 - 2004 ABAS Software AG
+..
+..  Funktion       : Liefert den Monatsnamen eines Datums
+..                   in der Variablen xxtmonth
+..
+..  Schnittstelle (Parameter und ihre Bedeutung)
+..    verwendet Arrayparameter (arg.i)          : nein
+..    verwendet Namensparameter (xpname=wert)   : nein
+..
+..    Parameter    Bedeutung
+..    ---------------------------------------------------------
+..    xxddate      Das Datum zu welchem der Monatsname ausgegeben werden soll
+..
+..  Ablauf         :
+..*****************************************************************************
+..
+..  functionality  : Gets the month name for a date
+..
+..  interface (argument with meaning)
+..    used array argument (arg.i)           : no
+..    used name arguement  (xpname=value)   : no
+..
+..    argument     meaning
+..    ---------------------------------------------------------
+..    xxddate      The date for which the month name has to set
+..
+..  program flow  :
+... includes      :
+..*****************************************************************************
+..
+..
+..
+..*****************************************************************************
+.art text xxtmonth                                ? _defined(xxtmonth)
+.art text xxmonth01 xxmonth02 xxmonth03 xxmonth04 ? _defined(xxtmonth01)
+.art text xxmonth05 xxmonth06 xxmonth07 xxmonth08 ? _defined(xxtmonth05)
+.art text xxmonth09 xxmonth10 xxmonth11 xxmonth12 ? _defined(xxtmonth09)
+..
+.weiter END ? _defined(xxddate)
+..
+.fo xxmonth01 = "Januar"
+.fo xxmonth02 = "Februar"
+.fo xxmonth03 = "März"
+.fo xxmonth04 = "April"
+.fo xxmonth05 = "Mai"
+.fo xxmonth06 = "Juni"
+.fo xxmonth07 = "Juli"
+.fo xxmonth08 = "August"
+.fo xxmonth09 = "September"
+.fo xxmonth10 = "Oktober"
+.fo xxmonth11 = "November"
+.fo xxmonth12 = "Dezember"
+..
+.fo xxtmonth = 'xxddate:8' << -4 << 2
+.fo xxtmonth = xxmonth.xxtmonth
+..
+!END
+.weiter
+</code>

@@ -1,0 +1,22 @@
+====== Maskenvorbelegung ======
+
+Hinter dem Kommando wird mit dem ''?'' die Maskenvorbelegung eingeleitet. Die Parameter  werden mit der Pipe ''|'' getrennt.
+
+Beispiel: Anlegen eines VK-Auftrags
+<code fo>
+.fo xtcmd = "<Verkauf> <neu> ,Auftrag ? kunde=4711|[insert]=1|1:artex=ONKYOCBX-300"
+.kommando -PARALLEL 'xtcmd'
+</code>
+
+<note tip>
+Um einen Button zu starten gibt man einfach den Feldnamen ohne Zuweisung an. Somit wird der Button ausgeführt.
+</note>
+
+Beispiel: Aufruf einer Maske mit Ausführung eines Buttons
+<code>
+<DATEI2><neu> ? ybutest = 
+</code>
+
+<note important>
+Die Maskenvorbelegung erfolgt **nach** dem Maskeneintritt. Somit können die vorbelegten Werte nicht vorher verwendet werden.
+</note>

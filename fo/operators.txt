@@ -1,0 +1,7 @@
+====== Operatoren ======
+
+
+===== Boolesche Operatoren =====
+
+  * Ausdrücke werden **ODER** verknüpft mit '';''
+  * Ausdrücke werden **UND** verknüpft mit ''&''

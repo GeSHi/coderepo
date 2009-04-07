@@ -1,0 +1,13 @@
+====== Variablen ======
+
+Na ja, Variablen sind in abas FO Programm generell global. Diese werden auf unterschiedliche Weise definiert. 
+
+<note>
+Jeder Datentyp der in der Variablentabelle deklariert wird, kann auch im FO-Programm definiert und verwendet werden. Siehe auch Variablenarten.
+</note>
+
+{{page>.variablenarten}}
+{{page>abas:db:pufferarten}}
+{{page>.mehrfachdeklaration}}
+{{page>.varexists}}
+{{page>.systemvariablen}}

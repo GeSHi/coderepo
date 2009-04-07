@@ -1,0 +1,27 @@
+====== Sprungmarken ======
+
+Ja Wahnsinn :-\! Es gibt Sprungmarken, und somit werden Kontrollstrukturen in FO realisiert!
+
+Ein Abschnitt oder eine Marke wird mit ''!'' eingeleitet. Möchte man zur Marke springen, erfolgt die mit dem Befehl ''.weiter''.
+
+Endlosschleife
+<code fo>
+!MARKENNAME
+
+.weiter MARKENNAME
+</code>
+
+Beispiel für ein einfaches FOP
+<code fo>
+.weiter LEEREN ? 'M|objekt' = ""
+
+.fo M|name = M|objekt^name
+.weiter ENDE
+
+!LEEREN
+.fo M|name = ""
+
+!ENDE
+</code>
+
+Ist in der Maske kein Objekt angegeben, so wird der dazugehörige Name in der Maske gelöscht bzw. befüllt. Damit in der Befüllung der nachfolgende Code nicht ausgeführt wird, wird zur Marke ENDE gesprungen. Somit werden auch **if else** Kontrollstrukturen in abas realisiert.
