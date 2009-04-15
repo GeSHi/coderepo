@@ -1,0 +1,2 @@
+dir | where-object { $_.LastWriteTime -like "6/1/2006 *" } |
+    move-item -destination c:\DestFolder 5 $hello 
