@@ -1,25 +1,13 @@
-====== Blanks, Leerzeichen entfernen ======
-
-<code fo>
-.fo xt = " Text mit Leerzeichen vorne und hinten "
+﻿.fo xt = " Text mit Leerzeichen vorne und hinten "
 
 .fo xt = (xt<<"")>>""
 
 'xt'
 .. ergibt xt = >Text mit Leerzeichen vorne und hinten
-</code>
 
-und wenn man sich erinnert, daß FOP aus einem Listgenerator entstanden ist, dann geht auch:
-
-<code fo>
 .fo xt = " Text mit Leerzeichen vorne und hinten "
 
 .fo xt = 'xt'
 
 'xt'
 .. ergibt xt = >Text mit Leerzeichen vorne und hinten
-</code>
-
-<note important>
-Achtung! Es werden nur Leerzeichen vorne und hinten entfernt. Bei ''Dr. Fischer'' wird das Leerzeichen zwischen dem Dr. und Fischer nicht entfernt! Siehe dazu [[abas:dev:replace]].
-</note>

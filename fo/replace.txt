@@ -1,26 +1,9 @@
-====== Replace Methode anwenden ======
+﻿.fo xterg = 'xteingabe' * ("+LX/" + 'xtstring' + "//")
 
-Eingabe
-  * xteingabe = Text, der ersetzt werden soll
-  * xtstring = Zeichen das entfernt werden soll
-
-Rückgabe 
-  * xterg = neuer Text
-
-<code fo>
-.fo xterg = 'xteingabe' * ("+LX/" + 'xtstring' + "//")
-</code>
-
-Beispiel: Entfernen von allen Leerzeichen
-<code fo>
 .fo xttext = "Dr. Fischer"
 .fo xterg = 'xttext' * ("+LX/ //")
 
 'xterg'
 .. liefert "Dr.Fischer"
-</code>
 
-Für Ersetzung mit Leerzeichen das hier verwenden
-<code fo>
 .fo xterg = 'xteingabe' * ("+LX/" + 'xtstring' + "/ /")
-</code>

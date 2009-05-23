@@ -1,18 +1,9 @@
-====== Ausgabeumleitung bei Laderfehler ======
-
-Sinn und Zweck: Wenn Lader ausgeführt und aufgrund eines beknackten FO-Programms abbricht oder durch ein System-Update neue Funktionalitäten hinzukommen sind, die der Lader nicht berücksichtigt (wie z.B. das Werfen von Warnhinweisen, die der Lader nicht wegdrückt) tauchen Fehler auf. Damit diese Fehlermeldung auch ausgeben wird, leitet man sie einfach zur Bildschirmausgabe aus.
-
-Defintion der Lader-Dateien
-<code fo>
-.. Lader-Dateien
+﻿.. Lader-Dateien
 .fo xtfop   = "tmp/XUMBUCH." + 'PID' + ".START"
 .fo xtlader = "tmp/XUMBUCH." + 'PID' + ".LADER"
 .fo xtout   = "tmp/XUMBUCH." + 'PID' + ".OUT"
 .fo xterr   = "tmp/XUMBUCH." + 'PID' + ".ERR"
-</code>
 
-Anstelle von .box einfach die Ausgabe vom abas-System auf dem Bildschirm anzeigen.
-<code fo>
 .ausgabe BILD
 *** Fehler in der Umbuchung ***
 Bitte benachrichtigen Sie ihren Systembetreuer.
@@ -20,4 +11,3 @@ Bitte benachrichtigen Sie ihren Systembetreuer.
 Folgender Fehler wurde vom System festgestellt:
 -----------------------------------------------
 .eingabe 'xterr'
-</code>

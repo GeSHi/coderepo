@@ -1,9 +1,4 @@
-====== DATMONTEXT ======
-
-Sourcecode des Programms
-
-<code FO>
-..!interpreter german translate
+﻿..!interpreter german translate
 ..*****************************************************************************
 ..
 ..  FOP-Name       : DATMONTEXT
@@ -70,4 +65,3 @@ Sourcecode des Programms
 ..
 !END
 .weiter
-</code>

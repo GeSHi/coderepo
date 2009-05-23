@@ -1,19 +1,8 @@
-====== Kommentare ======
-
-Kommentare werden mit ''..'' eingeleitet
-
-Beispiel
-<code fo>
 .. Bereite Text vor
 .fo xttext = "FO ist bescheuert"
 .. jetzt die tolle Ausgabe
 'xttext'
-</code>
 
-oder mit '':'' von einer Sprungmarke abgetrennt
-
-Beispiel
-<code fo>
 .fo xttext = "mehr ist FALSE"
 .weiter Marke1         ? _(MEHR)
 .fo xttext = "mehr ist TRUE"
@@ -21,4 +10,3 @@ Beispiel
 .box Der aktuelle Wert
 'xttext'
 ..box Ende
-</code>

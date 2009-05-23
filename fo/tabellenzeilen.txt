@@ -1,25 +1,4 @@
-====== Tabellenoperationen ======
-
-Diese Infos sind zum Umgang mit Positionen wichtig.
-
-===== Gesamt-Anzahl ermitteln =====
-
-<note tip>
-Im jedem Datensatz steht die Gesamtsumme der Tabellenzeilen in der Variable ''ozeilen''. Dies kann in Selektionsleisten genutzt werden. Dabei kann man auch Bereiche eingeben wie z.B.: ozeilen=1! bedeutet suche alle Datensätze mit mehr als eine Zeile!
-</note>
-
-Befindet man sich im Maskenmodus steht die Variable ''tzeilen'' zur Verfügung
-===== Aktuelle Zeile =====
-In der Datenbank wird über die Variable ''zn'', die aktuelle Reihenfolge/Ordnung der Tabellenzeile definiert.
-Befindet man sich im Maskenmodus kann man mit ''M|aktzeile'' bestimmen, welche laufende Zeilennummer die Position hat.
-
-<note important>
-Bei Abfragen mit Selektionsleisten: Bei Verwendung der Option ''@zeilen=ja'' kann nicht auf die Variable ''zn'' abgefragt werden. Dafuer gibt es die aktuelle Selektionszeile **''selzeile''**. 
-</note>
-
-Beispiel: Verwendung von Selektionszeile
-<code fo>
-.. Tabelle Ergebnismenge vorher entfernen
+﻿.. Tabelle Ergebnismenge vorher entfernen
 .ein TABLEEREN
 ..
 .. Selektionsleiste definieren
@@ -42,11 +21,3 @@ Beispiel: Verwendung von Selektionszeile
 .. Schleifenende wenn Abbruchbedingung eingetreten
 !ELOP001:
  ==============================
-</code>
-===== Referenzen =====
-
-siehe auch 
-
-  * [[abas:dev:zeilen]]
-  * [[abas:dev:zeilenentfernen]]
-  * [[abas:gui:zeilenfarbe]]

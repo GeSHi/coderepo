@@ -1,8 +1,4 @@
-====== Regular Expressions ======
-
-Beispiel für **contains** (Text a enthält Zeichen von Text b)
-<code fo>
-.fo xttext = "+ Material-Aufwand"
+﻿.fo xttext = "+ Material-Aufwand"
 ..
 .. Suche nach + und - im Text
 ..
@@ -15,4 +11,3 @@ xttext/"*/+-/*"
 xttext/"*/+-/*"
 ..
 .. MEHR liefert nein bzw FALSE
-</code>

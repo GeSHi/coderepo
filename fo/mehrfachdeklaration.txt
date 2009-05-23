@@ -1,7 +1,0 @@
-===== Mehrfachdeklaration =====
-
-<code fo>
-.art text xtprio xtsend
-</code>
-
-Individuelle Variablen fangen mit y an, wenn sie aus der Datenhaltung kommen, sonst mit x.
