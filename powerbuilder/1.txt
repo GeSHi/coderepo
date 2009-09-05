@@ -1,0 +1,50 @@
+long ll_contact, ll_index,ll_total
+int  li_row
+string ls_fname, ls_lname, ls_firm_num
+
+IF idw_investments.RowCount() < 1 THEN RETURN
+
+/*
+Check for selected rows
+*/
+
+li_row = idw_investments.GetRow()
+
+IF li_row < 1 THEN
+    Messagebox("Information","An Investment Election Must Be Seleced.")
+    idw_investments.SetFocus()
+    RETURN
+END IF
+
+ll_contact = idw_investments.object. ce_plan_fund_settler_cont_id[li_row]
+
+// prompt user for a contact
+//openwithparm(w_get_mta_contact_with_reset,ll_contact)
+openwithparm(w_get_mta_contact_from_edit_contact,ll_contact)
+
+// user cancelled
+IF Message.DoubleParm = -1 THEN RETURN
+
+ll_contact = Message.DoubleParm
+
+idw_investments.object. ce_plan_fund_settler_cont_id[li_row] = ll_contact
+
+
+select ce_mta_contact.fname || '-' || '-',   
+       ce_mta_contact.lname,
+       ce_mta_contact.firm_num,
+       ce_mta_contact.executing_broker
+  into :ls_fname,   
+       :ls_lname,
+       :ls_firm_num,
+       :ls_exec_brkr
+  from ce_mta_contact  
+ where ce_mta_contact.ce_mta_contact_id = :ll_contact 
+ using SQLCA;
+
+//Need to make sure this broker has all of the goodies that we need.
+if isNull(ls_firm_num) or len(trim(ls_firm_num)) < 1 then
+    MessageBox("Required Information Missing", "The contact that you selected does not have a Firm Number.~r~n" + &
+               "Please select a contact that has a valid Firm Number.")
+    return                
+end if

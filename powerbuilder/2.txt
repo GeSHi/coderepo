@@ -1,0 +1,37 @@
+IF idw_investments.GetItemStatus(li_row,'einnum_to_use',Primary!) = New! OR&
+   idw_investments.GetItemStatus(li_row,'einnum_to_use',Primary!) = NewModified! THEN
+
+    select ce_broker.use_firm_trustid  
+      into :ls_use_firm_trustid  
+      from ce_broker  
+     where ce_broker.firm_num = :ls_firm_num 
+        and ce_broker.executing_broker = :ls_exec_brkr 
+     using SQLCA;
+        
+        
+    IF ls_use_firm_trustid = 'Y' THEN
+        idw_investments.object.einnum_to_use[li_row] = 'S'
+    ELSE
+        idw_investments.object.einnum_to_use[li_row] = 'P'      
+    END IF
+    
+END IF
+
+
+idw_investments.object.settling_fname[li_row] = ls_fname
+idw_investments.object.settling_lname[li_row] = ls_lname
+
+
+IF MessageBox("Information","Would You Like To Change All Investments To Use " + ls_fname + ' ' + &
+              ls_lname + ' As The Settling Broker?',Question!,YesNo!,1) = 1 THEN
+                  
+    ll_total = idw_investments.RowCount()             
+    FOR ll_index = 1 to ll_total              
+        idw_investments.object.settling_fname[ll_index] = ls_fname
+        idw_investments.object.settling_lname[ll_index] = ls_lname
+        idw_investments.object.ce_plan_fund_settler_cont_id[ll_index] = ll_contact
+    NEXT
+END IF
+
+
+idw_investments.SetFocus()
