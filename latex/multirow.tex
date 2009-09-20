@@ -1,0 +1,161 @@
+\documentclass[titlepage,
+				a4paper,
+				12pt,
+				%idxtotoc
+			  ]{scrartcl}
+\usepackage[latin1]{inputenc}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[scaled=0.9]{luximono}
+\usepackage{upgreek}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{makeidx}
+\usepackage[hyphens,obeyspaces,spaces]{url}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{hhline}
+
+%nur bei Pixelschrift einschalten, ab MikTex 2.7 nicht nötig
+%\usepackage{type1ec}
+%\usepackage{yfonts}[1998/10/03]
+
+%Siehe: http://latex.hpfsc.de/content/latex_tutorial/stichwortverzeichnis
+%Siehe: http://www.matthiaspospiech.de/latex/vorlagen/allgemein/preambel/13/#toc-index
+% Index soll Stichwortverzeichnis heissen
+\renewcommand{\indexname}{Stichwortverzeichnis}
+% Stichwortverzeichnis soll im Inhaltsverzeichnis auftauchen
+%\addcontentsline{toc}{section}{Stichwortverzeichnis}
+%% Index & Co. ===========================================================
+% gibts dafuer noch eine sauberere Loesung ?
+%%%%%%%% Index zweispaltig %%%%%%%
+
+\makeatletter
+\renewenvironment{theindex}{%
+\setlength{\columnsep}{2em}
+\begin{multicols}{2}[\section{\indexname}]
+\parindent\z@
+\parskip\z@ \@plus .3\p@\relax
+\let\item\@idxitem}%
+{\end{multicols}\clearpage}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\klein}[1]{\begin{scriptsize}#1\end{scriptsize}}
+\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{epsfig}
+\usepackage{pst-plot} % For axes
+%\usepackage{pst-grad} % For gradients
+\usepackage{pst-uml}
+%Punkte für Inhaltsverzeichniss
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em} {2.3em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{3.8 em}{3.2em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{ 7.0em}{4.1em}}
+\renewcommand*\l@paragraph{\@dottedtocline{4}{10em }{5em}}
+\renewcommand*\l@subparagraph{\@dottedtocline{5}{1 2em}{6em}}
+\renewcommand*\l@figure{\@dottedtocline{1}{1.5em}{ 2.3em}}
+\makeatother
+%Verlinkung im PDF
+\usepackage{color,hyperref}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+\definecolor{codegrey}{rgb}{0.9,0.9,0.9}
+\hypersetup{%
+colorlinks=true,
+linkcolor=black,
+anchorcolor=black,
+citecolor=darkgreen,
+filecolor=black,
+menucolor=black,
+urlcolor=blue,
+breaklinks=true,
+linktocpage=true,
+pdfpagemode=UseThumbs,
+bookmarksopen=true,
+bookmarksnumbered=true,
+pdfstartpage={1},
+pdfkeywords={},
+pdfcreator={Benny Baumann},
+pdfproducer={Benny Baumann}
+}
+
+\usepackage{listings}
+\lstset{%
+basicstyle=\footnotesize \ttfamily, 
+showspaces=false, 
+showtabs=false, 
+frame=single,
+backgroundcolor=\color{codegrey},
+tabsize=4
+}
+
+\lstloadlanguages{C}
+
+% Kleiner Abstand zwischen Absätzen ...
+\setlength{\parskip}\medskipamount
+
+%\usepackage{psboxit,pstricks}
+%http://zoonek.free.fr/LaTeX/LaTeX_samples_title/0.html
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2cm}
+\geometry{includehead, includefoot, top=1.8cm, bottom=2cm}
+%Kopf- und Fußzeile
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{}
+\fancyhf{}
+%Linie oben
+\renewcommand{\headrulewidth}{0pt}
+%Fußzeile mittig
+\fancyfoot[R]{\thepage}
+%Fußzeile rechts bzw. außen
+%\fancyfoot[L]{\includegraphics[width=1.3cm]{../Logo/Murphy_klein.eps} Murphy Incorporated -- We follow the law}
+
+%Linie unten
+\renewcommand{\footrulewidth}{0.5pt}
+
+\newcommand{\supcite}[1]{\textsuperscript{\cite{#1}}}
+\newcommand{\doccite}[1]{\supcite{#1}}
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+
+\newcommand{\textsup}[1]{\textsuperscript{#1}}
+
+\newcommand{\draft}[1]{\colorbox[rgb]{0.9,0.9,0.9}{\textcolor[rgb]{0.4,0.4,0.4}{\parbox{\textwidth-1cm}{#1}}}}
+
+\definecolor{bluebkg_dark}{rgb}{0.7,0.7,1.0}
+\definecolor{bluebkg_middle}{rgb}{0.8,0.8,1.0}
+\definecolor{bluebkg_light}{rgb}{0.9,0.9,1.0}
+
+\urlstyle{tt}
+
+%Stichwort-Verzeichnis erstellen
+\makeindex
+\begin{document}
+
+% Dies bedeutet im Überblick:
+%\renewcommand{\rowcolor}[1]{}
+%\renewcommand{\cellcolor}[1]{}
+\renewcommand{\raggedright}{\hfill}
+
+\begin{longtable}[c]{|>{\bfseries
+%\columncolor{bluebkg_middle}
+}p{7.0cm}|>{\raggedright}p{2.5cm} p{0.5cm}|>{\raggedright}p{2.5cm} p{0.5cm}|}
+\hline
+\cellcolor{bluebkg_dark}\multirow{2}{*}{\bfseries Funktion} &
+\multicolumn{4}{c|}{\cellcolor{bluebkg_dark}\centering\bfseries Gemessene Zeit} \\
+
+\cellcolor{bluebkg_dark} & \multicolumn{2}{c|}{\cellcolor{bluebkg_dark}\centering\bfseries System 1} & \multicolumn{2}{c|}{\cellcolor{bluebkg_dark}\centering\bfseries System 2} \\
+\endhead
+\hline
+
+Test & {\raggedright 42} & $\upmu$s & {\raggedright 1,337} & ms \\\hline
+\end{longtable}
+
+\end{document}
