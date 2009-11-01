@@ -1,0 +1,143 @@
+' ******************************
+' * example2.mb
+' *
+' * Created on 2009.IX.17
+' *
+' * Author: Tomasz Berus (t.berus@gisodkuchni.pl)
+' ******************************
+Include "Mapbasic.def"
+
+Declare Sub Main
+Declare Sub CreateGrid
+Declare Sub AppExit
+Declare Sub ShowInfo
+Declare Function Str2Sec(byVal s as String) as Float
+
+Sub Main
+    Call ShowInfo
+
+    Create Menu "Grid" as 
+        "Create grid"    Calling CreateGrid, 
+        "About..."       Calling ShowInfo, 
+        "(-", 
+        "Exit"           Calling AppExit
+
+    Alter Menu Bar Add "Grid"
+End Sub
+
+Sub AppExit
+    End Program
+End Sub
+
+Sub ShowInfo
+    print "---"
+    print "Grid Generator"
+    print ""
+End Sub
+
+Function Str2Sec(byVal s as String) as Float
+    Dim
+        wd, wm, ws   as Float, 
+        s1           as String
+        
+    if instr(1, s, ".") <> 0 then
+        s1 = mid$(s, 1, instr(1, s, ".") - 1)
+        s = mid$(s, instr(1, s, ".") + 1, len(s))
+        wd = val(s1)
+        if instr(1, s, ".") <> 0 then
+            s1 = mid$(s, 1, instr(1, s, ".") - 1)
+            s = mid$(s, instr(1, s, ".") + 1, len(s))
+            wm = val(s1)
+            ws = val(s)
+        Else
+            wm = val(s)
+        End if
+    Else
+        wd = val(s)
+    End if
+    Str2Sec = wd * 3600 + wm * 60 + ws
+End Function
+
+Sub CreateGrid
+    Dim
+        o           as Object, 
+        sx, sy, 
+        sdx, sdy, 
+        sxi, syi, 
+        oList(1)    as String, 
+        x, y, 
+        dx, dy      as Float, 
+        xi, yi, 
+        i, j, k, l  as Integer
+        
+    k = numTables()
+    reDim oList(k)
+    For i = 1 to k
+        oList(i) = TableInfo(i, TAB_INFO_NAME)
+    Next
+    Dialog
+        Title "Select"
+        Control StaticText
+            Position 20, 5
+            Title "Layer:"
+        Control PopupMenu
+            Title From Variable oList
+            Into l
+        Control StaticText
+            Position 20, 20
+            Title "x(d, m, s) = "
+        Control EditText
+            Value "20.00"
+            Into sx
+        Control StaticText
+            Title "y(d, m, s) = "
+        Control EditText
+            Value "50.30"
+            Into sy
+        Control StaticText
+            Position 20, 40
+            Title "dx(d, m, s) = "
+        Control EditText
+            Value "0.15"
+            Into sdx
+        Control StaticText
+            Title "dy(d, m, s) = "
+        Control EditText
+            Value "0.10"
+            Into sdy
+        Control StaticText
+            Position 20, 60
+            Title "interval-x = "
+        Control EditText
+            Value "10"
+            Into sxi
+        Control StaticText
+            Title "interval-y = "
+        Control EditText
+            Value "10"
+            Into syi
+        Control OKButton
+            Position 20, 80
+        Control CancelButton
+
+    if CommandInfo(CMD_INFO_DLG_OK) then
+        x = Str2Sec(sx)
+        xi = val(sxi)
+        yi = val(syi)
+        dx = Str2Sec(sdx)
+        dy = Str2Sec(sdy)
+        For i = 1 to xi
+            y = Str2Sec(sy)
+            For j = 1 to yi
+                Set CoordSys Earth
+                Create Region Into Variable o
+                    1 4
+                    (x / 3600, y / 3600) ((x + dx) / 3600, y / 3600)
+                    ((x + dx) / 3600, (y + dy) / 3600) (x / 3600, (y + dy) / 3600)
+                y = y + dy
+                Insert Into oList(l) (obj) Values(o)
+            Next
+            x = x + dx
+        Next
+    End if
+End Sub

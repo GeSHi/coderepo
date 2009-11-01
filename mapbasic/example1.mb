@@ -1,0 +1,12 @@
+' ******************************
+' * example1.mb
+' *
+' * Created on 2009.IX.17
+' ******************************
+Include "MapBasic.def"
+
+Declare Sub Main
+
+Sub Main
+    print "Hello World"
+End Sub
