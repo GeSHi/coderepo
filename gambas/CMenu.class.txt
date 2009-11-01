@@ -1,0 +1,71 @@
+' Gambas class file
+
+PUBLIC Name AS String
+PUBLIC Caption AS String
+PUBLIC Shortcut AS String
+PUBLIC Group AS String
+PUBLIC Ctrl AS Boolean
+PUBLIC Shift AS Boolean
+PUBLIC Alt AS Boolean
+PUBLIC Enabled AS Boolean
+PUBLIC Visible AS Boolean
+PUBLIC Checked AS Boolean
+PUBLIC Toggle AS Boolean
+PUBLIC Level AS Integer
+PUBLIC Picture AS String
+PUBLIC Tag AS String
+PUBLIC Action AS String
+
+PUBLIC SUB _new()
+
+  Enabled = TRUE
+  Visible = TRUE
+
+END
+
+PUBLIC SUB SetShortcut(sShortcut AS String)
+
+  DO
+
+    IF UCase(Left$(sShortcut, 5)) = "CTRL+" THEN
+      Ctrl = TRUE
+      sShortcut = Mid$(sShortcut, 6)
+      CONTINUE
+    ENDIF
+
+    IF UCase(Left$(sShortcut, 6)) = "SHIFT+" THEN
+      Shift = TRUE
+      sShortcut = Mid$(sShortcut, 7)
+      CONTINUE
+    ENDIF
+
+    IF UCase(Left$(sShortcut, 4)) = "ALT+" THEN
+      Alt = TRUE
+      sShortcut = Mid$(sShortcut, 5)
+      CONTINUE
+    ENDIF
+
+    Shortcut = sShortcut
+    RETURN
+
+  LOOP
+
+END
+
+
+PUBLIC FUNCTION GetShortcut() AS String
+
+  DIM sShortcut AS String
+
+  IF Shortcut THEN
+
+    IF Ctrl THEN sShortcut = sShortcut & "Ctrl+"
+    IF Shift THEN sShortcut = sShortcut & "Shift+"
+    IF Alt THEN sShortcut = sShortcut & "Alt+"
+    sShortcut = sShortcut & Shortcut
+
+    RETURN sShortcut
+
+  ENDIF
+
+END
