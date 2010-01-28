@@ -1,0 +1,53 @@
+
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.59)
+AC_INIT([mikylib],[0.0.1],[user@mobile.de])
+DATE="August 2009"
+AC_CONFIG_SRCDIR(src)
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+
+AH_TEMPLATE([TARGET_SYSTEM], [The machine triplet of the target system])
+AC_DEFINE_UNQUOTED([TARGET_SYSTEM], ["$target"])
+
+# Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+
+AC_PROG_RANLIB
+
+# Check whether miky import libraries should be linked
+case $host in 
+	*-mingw32* | *-windows*)
+		CPPFLAGS="$CPPFLAGS -DMIKY"
+		EXTRA_LIBS="miky-core.a miky-kps.a"
+	;;
+	*)
+		AC_CHECK_HEADER([source/source.h], , 
+			[AC_MSG_ERROR([please install the source development package])])
+		AC_CHECK_LIB(source, miky_find_file, , 
+			[AC_MSG_ERROR([libsource not found, please install the corresponding package first])])
+
+		AC_MSG_CHECKING([source version])
+		AC_TRY_RUN([#include <stdio.h>
+  			#include <source/source.h>
+			extern char *source_version_string;
+			int main() {
+				FILE *f;
+				f = fopen("confval", "w");
+				if(!f) exit(1);
+				fprintf(f, "%s\n", source_version_string);
+				fclose(f);
+    			exit(0);
+			}], 
+			[mkseversion=`cat confval`], [mkseversion=], [mkseversion=unknown])
+#		AC_RESTORE_FLAGS
+		AC_MSG_RESULT("$mkseversion")
+		if test -z "$mkseversion"; then
+	  		AC_MSG_ERROR([Could not compile a simple source program -- check your installation])
+		fi
+	;;
+esac
+
+ 
