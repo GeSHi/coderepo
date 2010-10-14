@@ -1,0 +1,112 @@
+{
+Knight Tour : obligatory problem for all logic languages.
+
+The "Knight's Tour" is an ancient puzzle in which the object is to move a knight,
+starting from any square on a chess board, to every other square, landing on each
+square only once.  
+
+The code shown here works on a chess board of size n x m, with the knight initially
+placed at any row and column. A sample query for an 8x8 chesboard and the knight at 
+upper left corner would be:
+
+    all KnightTour(8,8,0,0)  
+
+The number of solutions {obviously} depends on the chesboard dimensions. Interestingly,
+it also depends on the knight's initial position.
+
+We found over 50000 solutions in about 2 hours running as an idle thread on an Athlon 
+XP 1600+. This is just a tiny fraction of all possible solutions. As far as we can tell,
+the exact number of solutions is not known, but is estimated to be more (possibly
+WAY more) then 122,802,512.
+The solutions come in bunches, so there may be long periods between solutions.
+
+The code shown is very simple and relies on the fact that any "illegal" move results
+in a backtrack, thus forcing another move and so on, until eventually the move is not
+illegal. Illegal moves are all those that would leave the chessboard or would land on 
+a previously visited place.
+
+This is one solution:
+
+     1  8 11 16  3 18 13 64 
+    10 27  2  7 12 15  4 19 
+    53 24  9 28 17  6 63 14 
+    26 39 52 23 62 29 20  5 
+    43 54 25 38 51 22 33 30 
+    40 57 42 61 32 35 48 21 
+    55 44 59 50 37 46 31 34 
+    58 41 56 45 60 49 36 47 
+
+}
+
+local Board = [0..]->[0..]->I              
+
+pred KnightTour(rows:<[1..], columns:<I[1..], startrow:<I, startcol:<I) iff
+    pos:.Board & Dupl(rows,Dupl(columns,0),pos) & //Intialize all position as 0 (not visited)
+    pos (startrow,startcol) := 1 &                //First step is placing the knight at (startrow,startcol)
+    KnightTour1(pos,startrow,startcol,2) &        //Calculate the rest of the steps (starting at step 2)                      
+    PrintFormattedSolution(pos,0)                 //Simple formatted printout of the solution
+                                                  // (starting at row 0) 
+pred KnightTour1(pos:.Board,row:<I,col:<I,step:<I)  iff
+    if step <= Len(pos)*Len(pos(0)) then          // there are Rows x Columns possible moves  
+        MoveKnight(row,col,newrow,newcol) &
+        // If the position is not visited yet, we'll assign the step number to it.
+        // (Otherwise the test for position = 0 fails and forces a backtrack)
+        // If the newcol, newrow are outside the chessboard, we'll get a backtrack as well.
+        pos(newrow,newcol) = 0 & 
+        // If we got here, then the newcol,newrow are on the chessboard and were never visited.
+        // So we mark the place as visited and continue with the next move.
+        pos(newrow,newcol) := step &
+        KnightTour1(pos,newrow,newcol,step+1)
+    end
+    
+local pred MoveKnight(row:<I,col:<I,newrow:>I,newcol:>I) iff
+
+    //  Given a knight at position row,col (marked 'k'), the knight can
+    //  move to eight different places:
+    //
+    //  +---+---+---+---+---+---+---+---+
+    //  |   |   |   |   |   |   |   |   |
+    //  +---+---+---+---+---+---+---+---+
+    //  |   |   |   |   |   |   |   |   |
+    //  +---+---+---+---+---+---+---+---+
+    //  |   |   | 7 |   | 6 |   |   |   |
+    //  +---+---+---+---+---+---+---+---+
+    //  |   | 8 |   |   |   | 5 |   |   |
+    //  +---+---+---+---+---+---+---+---+
+    //  |   |   |   | k |   |   |   |   |
+    //  +---+---+---+---+---+---+---+---+
+    //  |   | 1 |   |   |   | 4 |   |   |
+    //  +---+---+---+---+---+---+---+---+
+    //  |   |   | 2 |   | 3 |   |   |   |
+    //  +---+---+---+---+---+---+---+---+
+    //  |   |   |   |   |   |   |   |   |
+    //  +---+---+---+---+---+---+---+---+
+
+    // We don't use any strategies here, just generate all possible moves.
+   
+    newcol =  col - 2 & newrow = row + 1 | // 1   
+    newcol =  col - 1 & newrow = row + 2 | // 2   
+    newcol =  col + 1 & newrow = row + 2 | // 3   
+    newcol =  col + 2 & newrow = row + 1 | // 4   
+    newcol =  col + 2 & newrow = row - 1 | // 5   
+    newcol =  col + 1 & newrow = row - 2 | // 6   
+    newcol =  col - 1 & newrow = row - 2 | // 7   
+    newcol =  col - 2 & newrow = row - 1   // 8   
+
+// Print the double array "pos" as a matrix of M rows by N columns, with each position
+// formatted to two digits (no leading zeros)
+
+local pred PrintFormattedSolution(pos:.Board,row:<I) iff
+    if row < Len(pos) then 
+        PrintOneRow(pos(row),0) & PrintFormattedSolution(pos,row+1) 
+    end
+
+local proc PrintOneRow(r:<[0..]->I,col:<I) iff
+    if col < Len(r) then
+        if r(col) < 10 then 
+            Print(' ')
+        end &
+        Print(r(col),' ') & PrintOneRow(r,col+1)
+    end
+    
+
