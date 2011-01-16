@@ -1,0 +1,168 @@
+#   This file is part of PARPG.
+ 
+#   PARPG is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+ 
+#   PARPG is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+ 
+#   You should have received a copy of the GNU General Public License
+#   along with PARPG.  If not, see <http://www.gnu.org/licenses/>.
+---
+NPC_NAME: Dig
+AVATAR_PATH: gui/portraits/bouncer.png
+START_SECTION: main_dialog
+SECTIONS:
+-   ID: main_dialog
+    SAY: "What do you want?  Can't you see I'm drinking here?"
+    ACTIONS:
+    -   meet:
+        - dig
+    RESPONSES:
+    -   REPLY: "I'm looking for stuff to make beer with."
+        CONDITION: "quest.hasActiveQuest('beer') and not\
+           \ quest.hasFinishedQuest('beer') and\
+           \ quest['beer'].isGoalValue('beer_instructions')"
+        GOTO: help_beer
+        
+    -   REPLY: "Do you know Jacob?"
+        GOTO: explain_jacob
+        
+    -   REPLY: "Do you work here?"
+        GOTO: inn_background
+        
+    -   REPLY: "Are you going to kick my ass?"
+        GOTO: ass_kicking
+        
+    -   REPLY: "Was Camillia with you in the bar here two nights ago?"
+        CONDITION: "quest['fedex'].isGoalValue('drunkard_evidence')"
+        GOTO: check_alibi
+        
+    -   REPLY: "Who are those two women over there?"
+        GOTO: loose_women
+        
+    -   REPLY: "Why is Camilla such a bitch?"
+        CONDITION: "pc.met('camilla')"
+        GOTO: explain_camilla
+        
+    -   REPLY: "What is up with Synnove?"
+        CONDITION: "pc.met('synnove')"
+        GOTO: explain_synnove
+        
+    -   REPLY: "Your boss's booze monopoly is over!!"
+        CONDITION: "quest['beer'].getValue('beer_quality') >= 1"
+        GOTO: ungratitude
+        
+    -   REPLY: "I'm looking for Pekko, you seen him?"
+        CONDITION: "quest.hasActiveQuest('fedex') and not\
+           \ quest.hasFinishedQuest('fedex') and not\
+           \ quest['fedex'].isGoalValue('found_pekko')"
+        GOTO: help_fedex
+        
+    -   REPLY: "Hey, back off.  Just making small talk."
+        GOTO: parting_shot
+        
+-   ID: explain_camilla
+    SAY: "Well, it's probably because she gets hit on by greasy layabouts all\
+       \ hours of the day.  Maybe you should cut her some slack."
+    RESPONSES:
+    -   REPLY: "Hmmm... Can you confirm that she was here all night with you\
+           \ two days ago?"
+        CONDITION: "quest['fedex'].isGoalValue('drunkard_evidence')"
+        GOTO: check_alibi
+        
+    -   REPLY: "I suppose that's not unreasonable."
+        GOTO: back
+        
+-   ID: check_alibi
+    SAY: "Huh?  You're not her boyfriend.  And I'm not her babysitter.  Why do\
+       \ you care?"
+    RESPONSES:
+    -   REPLY: "I'm investigating a murder"
+        GOTO: investigate
+        
+    -   REPLY: "No reason.  No reason at all."
+        GOTO: main_dialog
+        
+-   ID: investigate
+    SAY: "Oh, in that case officer, she was with me the whole time. [rolls\
+       \ eyes]"
+    RESPONSES:
+    -   REPLY: "I get the sense that you are not taking this very seriously."
+        GOTO: main_dialog
+        
+-   ID: ass_kicking
+    SAY: "Not today.  I'm off duty.  But watch yourself all the same."
+    RESPONSES:
+    -   REPLY: "I'll do that."
+        GOTO: back
+        
+-   ID: explain_jacob
+    SAY: "I'm Jacob's guy.  You got a problem with him - or his family - you\
+       \ got a problem with me.  So do you have a problem?"
+    RESPONSES:
+    -   REPLY: "Nope.  No problem at all."
+        GOTO: back
+        
+-   ID: explain_synnove
+    SAY: "OK, she's a little weird.  She was 5 when she saw what those Russians\
+       \ bastards did to her mother.  She'd have been next if Jacob and I hadn't\
+       \ shown up in time."
+    RESPONSES:
+    -   REPLY: "Oh, I had no idea.  Gruesome."
+        GOTO: back
+        
+-   ID: inn_background
+    SAY: "If you call sittin' here and bullshitting `working`.  But I do solve\
+       \ problems for Jacob.  You're not a problem, are ya?"
+    RESPONSES:
+    -   REPLY: "No sir, no problem here."
+        GOTO: back
+        
+-   ID: help_beer
+    SAY: "Now you are just trying to be funny.  And failing.   Get out of here\
+       \ before I decide to throw you out."
+    RESPONSES:
+    -   REPLY: "Yeah, well maybe I'll find my own bouncer, too!"
+        GOTO: parting_shot
+        
+-   ID: loose_women
+    SAY: "Buy 'em a drink and find out."
+    RESPONSES:
+    -   REPLY: "I would do that if I could afford the booze in this place."
+        GOTO: back
+        
+-   ID: help_fedex
+    SAY: "I dunno.  Dude's in here all the time."
+    RESPONSES:
+    -   REPLY: "Was he here talking to Bart a couple nights ago?"
+        CONDITION: "quest['fedex'].isGoalValue('drunkard_evidence')"
+        GOTO: pekko_check
+        
+    -   REPLY: "Lot of help you are."
+        GOTO: parting_shot
+        
+-   ID: pekko_check
+    SAY: "Buy 'em a drink and find out."
+    RESPONSES:
+    -   REPLY: "I would do that if I could afford the booze in this place."
+        GOTO: back
+        
+-   ID: parting_shot
+    SAY: "Watch yourself, Bub.  I don't want to get out this chair."
+    RESPONSES:
+    -   REPLY: "Ulp."
+        GOTO: end
+        
+-   ID: ungratitude
+    SAY: "Oh, a wise guy huh??? [gets out of chair]"
+    RESPONSES:
+    -   REPLY: "I'm out of here!"
+        GOTO: end
+ 
+...
+
