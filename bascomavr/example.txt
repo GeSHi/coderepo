@@ -1,0 +1,21 @@
+'SIMPLE SERIAL OUTPUT PORT TEST
+
+$regfile = "m16def.dat"
+$crystal = 14745600
+ 
+Dim L As Long
+ 
+Open "comc.5:2400,8,n,1" For Output As #1                   'DB1 output
+Open "comc.3:2400,8,n,1" For Output As #2                   'DB2 output
+ 
+Do
+   Print #1 , "THIS IS PORT DB1. LINE " ; L
+   Print #2 , "THIS IS PORT DB2. LINE " ; L
+   L = L + 1
+ 
+   Toggle Porta.2                                           'SL3
+   Toggle Porta.1                                           'SL2
+   Toggle Porta.0                                           'SL1
+ 
+   Waitms 500
+Loop 
