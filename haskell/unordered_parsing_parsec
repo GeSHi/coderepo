@@ -1,0 +1,64 @@
+-- Simple example of Parsec Perm
+-- Author: Robert Massaioli (2010) - http://massaioli.homelinux.com/wordpress/
+-- Requirements: A version of parsec with these imports in it. (cabal install 'parsec > 3')
+-- Other Requirements: Ability to realise that this is why Haskell rocks.
+import Text.Parsec.Char
+import Text.Parsec.Combinator
+import Text.Parsec.Perm
+import Text.Parsec.Prim
+import Text.Parsec.String
+import Control.Monad
+ 
+-- these are just some example properties from the HTML IMG tag
+-- As you can see from this example the src is required and the width and hight are optional
+data ImageTagProperties = ImageTagProperties {
+                  src :: String,
+                  width :: Maybe Integer,
+                  height :: Maybe Integer
+                  }
+                deriving(Show)
+ 
+-- Begin Parser implementation
+-- xmlKeywords contains the the permutation grunt
+xmlKeywords :: Parser ImageTagProperties
+xmlKeywords = permute (createImageProperties <$$>                        (try srcParser)
+                                             <|?> (Nothing, Just `liftM` (try $ pixelParser "width"))
+                                             <|?> (Nothing, Just `liftM` (try $ pixelParser "height"))
+                      )
+  where
+    createImageProperties s w h = ImageTagProperties { src = s, width = w, height = h }
+ 
+-- just some simple parser functions to get the actual data
+srcParser :: Parser String
+srcParser = do
+  many1 space
+  string "src=\""
+  value <- many (noneOf "\"")
+  char '"'
+  return value
+ 
+pixelParser :: String -> Parser Integer
+pixelParser attributeName = do
+  many1 space
+  string (attributeName ++ "=\"")
+  value <- many digit
+  string "px\""
+  return $ read value
+-- End Parser implementation
+ 
+-- Testing code for your convinience follows
+main = do
+    mapM_ putStrLn . map (show . parse xmlKeywords "") $ goodTests
+ 
+-- here are some examples of some tests that pass, notice that the width, height
+-- and src come in different orders yet they all have the same result
+goodTests = 
+      " src=\"www.example.com/example.jpg\" width=\"2px\" height=\"5px\""
+    : " src=\"www.example.com/example.jpg\"    width=\"2px\" height=\"5px\""
+    : " width=\"2px\" src=\"www.example.com/example.jpg\" height=\"5px\""
+    : " height=\"5px\" src=\"www.example.com/example.jpg\" width=\"2px\""
+    : " src=\"www.example.com/example.jpg\""
+    : []
+ 
+-- these are examples that will fail on purpose
+fail1 = " height=\"5px\" width=\"2px\"" -- missing the src attribute, we stated that it was required
