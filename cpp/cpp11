@@ -1,0 +1,7 @@
+
+// http://en.cppreference.com/w/cpp/language/string_literal
+const char* s1 = R"foo(
+not a newline: \n
+and " still valid here
+)foo";
+
