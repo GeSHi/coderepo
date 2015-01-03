@@ -1,0 +1,44 @@
+// from http://cpprocks.com/if-arr-not_eq-0-and-not-false-alternative-tokens-in-c/
+
+// alternate tokens
+%:include <iostream>
+
+int main_a() <%
+    int arr<:2:> = <% 1, 1 %>;
+
+    if( arr<:0:> not_eq 0 and not false ) <%
+        std::cout << "Alternate tokens" << std::endl;
+    %>
+    return 0;
+%>
+
+// common tokens
+#include <iostream>
+
+int main_c() {
+    int arr[2] = { 1, 1 };
+
+    if( arr[0] != 0 && !false ) {
+        std::cout << "Common tokens" << std::endl;
+    }
+    return 0;
+}
+
+// mixed tokens
+%:include <iostream>
+
+int main_m() <%
+    int arr[2:> = <% 1, 1 };
+
+    if( arr[0:> not_eq 0 && !false ) <%
+        std::cout << "Mixed tokens" << std::endl;
+    }
+    return 0;
+}
+
+int main() {
+    main_a();
+    main_c();
+    main_m();
+    return 0;
+}
